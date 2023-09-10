@@ -3903,7 +3903,7 @@ void main() {
             </div>
         </div>
         <footercmp></footercmp>
-        `}),js},Sw=function(){yw().mount("#app")},Tw=function(){xw().mount("#weddingApp")};function Mw(){const t=document.getElementById("mainScript");t.getAttribute("page")==="mainapp"?Sw():t.getAttribute("page")==="weddingrings"&&Tw()}Mw();/*!
+        `}),js},Sw=function(){yw().mount("#app")},Tw=function(){xw().mount("#weddingApp")};function Mw(){const t=document.getElementById("mainScript");t.getAttribute("page")==="mainapp"?Sw():t.getAttribute("page")==="weddingrings"&&Tw()}window.onload=function(){Mw()};/*!
  * VERSION: 2.1.3
  * DATE: 2019-05-17
  * UPDATES AND DOCS AT: http://greensock.com

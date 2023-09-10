@@ -20,5 +20,6 @@ function main(){
         initWeddingRingApp();
     }
 }
-
-main();
+window.onload = function() {
+    main();
+};
