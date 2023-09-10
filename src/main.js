@@ -1,5 +1,24 @@
-import './style.css'
+import './style.css';
 import { initMainApp } from './components/controller';
+import { initWedRingMainApp } from './components/weddingringcontroller';
 
-const app = initMainApp();
-app.mount('#app');
+const initHome = function(){
+    const app = initMainApp();
+    app.mount('#app');
+}
+
+const initWeddingRingApp = function(){
+    const app = initWedRingMainApp();
+    app.mount('#weddingApp');
+}
+
+function main(){
+    const currentScript= document.getElementById('mainScript');
+    if(currentScript.getAttribute('page') === 'mainapp'){
+        initHome();
+    }else if(currentScript.getAttribute('page') === 'weddingrings'){
+        initWeddingRingApp();
+    }
+}
+
+main();
