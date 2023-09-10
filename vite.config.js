@@ -7,6 +7,11 @@ export default defineConfig({
   base: 'Jewellery',
   build: {
     outDir: './docs',
-    
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        collection: './weddingrings.html',
+      }
+    }
   }
 })
