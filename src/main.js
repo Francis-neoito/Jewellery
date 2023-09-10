@@ -14,6 +14,20 @@ const initWeddingRingApp = function(){
 
 function main(){
     const currentScript= document.getElementById('mainScript');
+    if(currentScript == null){
+        try {
+            initHome();
+        }
+        catch(err) {
+        console.log(err);
+        }
+        try {
+            initWeddingRingApp();
+        }
+        catch(err) {
+        console.log(err);
+        }    
+    }
     if(currentScript.getAttribute('page') === 'mainapp'){
         initHome();
     }else if(currentScript.getAttribute('page') === 'weddingrings'){
