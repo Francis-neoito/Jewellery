@@ -669,3 +669,69 @@ li{
 #collapsible-links{
   padding-inline-start: 0px;
 }
+
+#weddingRingAdArea{
+  width: 100%;
+  height: 80vh;
+  background-color: #171717;
+  background-image: url('/images/weddingringad2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#weddHead{
+  color: #fafafa;
+  font-size: 3.5em;
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#weddSubHead{
+  color: #fafafa;
+  font-size: 2em;
+  font-weight: 300;
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#weddsub{
+  color: #d0d0d0;
+  margin-top: 7em;
+  font-size: medium;
+  line-height: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 28vw;
+}
+#customizeButton{
+  margin-top: 2em;
+  width: 14em;
+  height: 4em;
+  border: 2px solid rgb(147, 147, 147);
+  border-radius: 2em;
+  color: rgb(212, 212, 212);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: 0.5s;
+}
+#customizeButton:hover{
+  border: 2px solid rgb(238, 238, 238);
+  color: #fcfcfc;
+  letter-spacing: 0.01em;
+}
+
+#customizeButtonCircle{
+  height: 2.5em;
+  width: 2.5em;
+  margin-right: 0.9em;
+  margin-left: 2em;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(147, 147, 147);
+  transition: 0.5s;
+}
+#customizeButton:hover #customizeButtonCircle{
+  border: 2px solid  rgb(238, 238, 238);
+}

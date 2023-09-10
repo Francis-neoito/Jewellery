@@ -22,7 +22,7 @@ const initWedRingMainApp = function(){
             <nav id="navright" class="nav">
                 <ul class="slider-ul">
                     <li class="slider-li">
-                    <a class="sliderA is-active" href="/Jewellery/index.html"><span class="navSpan">Home</span></a>
+                    <a class="sliderA" href="/Jewellery/index.html"><span class="navSpan">Home</span></a>
                     </li>
                     <li class="slider-li">
                             <a class="sliderA" href="#"><span class="navSpan">Collection</span></a>
@@ -152,6 +152,17 @@ const initWedRingMainApp = function(){
         methods:{},
         template:`
         <headercmp></headercmp>
+        <div id="weddingRingAdArea">
+            <div style="position:absolute;top: 25vh;left: 4em;">
+            <h1 id="weddHead">Your loved ones are unique,</h1>
+            <h3 id="weddSubHead">So should be their Jewels.</h3>
+            <p id="weddsub">Customize your uniqe ring with realistic graphics and pure beauty of the collection.</p>
+            <div id="customizeButton">
+                <span style="font-size: larger;padding-left: 1em;">Start now</span>
+                <div id="customizeButtonCircle"><img style="height:1.2em;width:1.2em" src="./images/edit.svg"/></div>
+            </div>
+            </div>
+        </div>
         <footercmp></footercmp>
         `
     });
