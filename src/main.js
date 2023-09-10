@@ -27,11 +27,12 @@ function main(){
         catch(err) {
         console.log(err);
         }    
-    }
-    if(currentScript.getAttribute('page') === 'mainapp'){
-        initHome();
-    }else if(currentScript.getAttribute('page') === 'weddingrings'){
-        initWeddingRingApp();
+    }else{
+        if(currentScript.getAttribute('page') === 'mainapp'){
+            initHome();
+        }else if(currentScript.getAttribute('page') === 'weddingrings'){
+            initWeddingRingApp();
+        }
     }
 }
 window.onload = function() {
