@@ -1,15 +1,22 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js'
 import { Slider } from './slider';
+import {categories, collection} from './categories';
 let app;
 const initMainApp = function(){
     app = createApp({props:[]},{properties:[]});
     app.component('app',{
         props:[],
         data(){
-            return{};
+            return{
+                categories: [],
+                categoryColSize: 5,
+                collections: [],
+                collectionColSize: 3,
+            };
         },
         created(){
-
+            this.categories = categories;
+            this.collections = collection;
         },
         mounted(){
             this.slider = new Slider();
@@ -20,7 +27,29 @@ const initMainApp = function(){
             },
             previousSlide(){
                 this.slider.previousSlide();
-            }
+            },
+            getCategoryRowNum(){
+                return Math.ceil(this.categories.length/this.categoryColSize);
+            },
+            getCategoryIndex(row,col){
+                return (row-1)*this.categoryColSize + (col);
+            },
+            isCellAvailable(row,col){
+                if(this.getCategoryIndex(row,col) > this.categories.length)
+                    return false;
+                return true;
+            },
+            getCollectionRowNum(){
+                return Math.ceil(this.collections.length/this.collectionColSize);
+            },
+            getCollectionIndex(row,col){
+                return (row-1)*this.collectionColSize + (col);
+            },
+            isCollectionCellAvailable(row,col){
+                if(this.getCollectionIndex(row,col) > this.collections.length)
+                    return false;
+                return true;
+            },
         },
         template:`
         <div class="headerPanel" :style="{'opacity': showPropertyMode ? '0.5':'1'}">
@@ -96,7 +125,99 @@ const initMainApp = function(){
                     style="object-contain:contain;height:1.5em;width:1.5em;margin-left: 0.5em;">
                 </div>
             </div>
+            <div id="sliderExploreButton">
+            </div>
         </div>
+        <div class="categoryHeadBlock">
+            <div class="categoryHead"><h4>Shop By Category</h4></div>
+            <div class="categoryHeadSub"><p>Browse through your favorite categories. We've got them all!</p></div>
+            <img src="./images/Line-Design.svg" style="margin-top: -20px;"/>
+        </div>
+        <div class="categoryBlock">
+            <table class="catagoryTable">
+                <tr v-for="row in Number(getCategoryRowNum())" style="padding-bottom:1em">
+                    <td class="categoryGrid" v-for="col in Number(categoryColSize)">
+                        <div class="categoryItemBlock" v-if="isCellAvailable(row,col)">
+                            <div class="categoryImgContainer"><img style="width:100%" :src="'./images/'+ categories[getCategoryIndex(row,col)-1].imgSrc"></div>
+                            <div class="categoryTitleContainer">
+                                <h4 style="text-align:center">{{categories[getCategoryIndex(row,col)-1].name}}</h4>
+                                <span class="exploreButton">Explore <span class="hide">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> ></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="categoryHeadBlock">
+            <div class="categoryHead"><h4>Shop By Collections</h4></div>
+            <div class="categoryHeadSub"><p>Whatever the occasion, we've got a beautiful piece of jewellery for you.</p></div>
+            <img src="./images/Line-Design.svg" style="margin-top: -20px;"/>
+        </div>
+        <div class="categoryBlock">
+        <table class="catagoryTable">
+            <tr v-for="row in Number(getCollectionRowNum())" style="padding-bottom:1em">
+                <td class="categoryGrid" v-for="col in Number(collectionColSize)">
+                    <div class="categoryItemBlock" style="width:95%" v-if="isCollectionCellAvailable(row,col)">
+                        <div class="categoryImgContainer"><img style="width:100%" :src="'./images/'+ collections[getCategoryIndex(row,col)-1].imgSrc"></div>
+                        <div class="categoryTitleContainer" style="flex-direction: row;justify-content: flex-start; margin-bottom:0">
+                            <h3 style="text-align:left;margin-left:1em;width:50%">{{collections[getCollectionIndex(row,col)-1].name}}</h3>
+                            <span class="exploreButton" style="float:right;justify-content: center; align-items: center;display:flex;">
+                                Explore &nbsp;<span class="hide">&nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;</span> ></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="categoryHeadBlock">
+        <div class="categoryHead"><h4>Connect With Us</h4></div>
+        <div class="categoryHeadSub"><p>We are always available to guide you at your convenience.</p></div>
+        <img src="./images/Line-Design.svg" style="margin-top: -20px;"/>
+    </div>
+    <footer class="footerBlock">
+    <div style="display:flex; flex-direction:row;">
+        <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Useful Links</h2>
+            <ul id="collapsible-links" class="menu-footer content">
+            <li><a class="gtm-footer-link" href="#" title="Delivery Information" target="_blank">Delivery Information</a></li>
+            <li><a class="gtm-footer-link" href="#" title="International Shipping" target="_blank">International Shipping</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Payment Options" target="_blank">Payment Options</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Track your Order" target="_blank">Track your Order</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Returns" target="_blank">Returns</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Find a Store" target="_blank">Find a Store</a></li>
+            </ul>
+        </div>
+        <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Information</h2>
+            <ul id="collapsible-links" class="menu-footer content">
+            <li><a class="gtm-footer-link" href="#" title="Delivery Information" target="_blank">Careers</a></li>
+            <li><a class="gtm-footer-link" href="#" title="International Shipping" target="_blank">Blog</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Payment Options" target="_blank">Offers & Contest Details</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Track your Order" target="_blank">Help & FAQs</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Returns" target="_blank">About Tanishq</a></li>
+            </ul>
+        </div>
+        <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Contact Us</h2>
+            <ul id="collapsible-links" class="menu-footer content">
+            <li><a class="gtm-footer-link" href="#" title="Delivery Information" target="_blank">Write to Us</a></li>
+            <li><a class="gtm-footer-link" href="#" title="International Shipping" target="_blank">1800-266-0123</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Payment Options" target="_blank">Chat with Us</a></li>
+            </ul>
+        </div>
+        <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Download</h2>
+            <div>
+            <a class="gtm-footer-link" href="#">
+                <img class="app-download appstore-img" src="./images/appstore.png" alt="appstore">
+            </a>
+            <a class="gtm-footer-link" href="#">
+                <img class="app-download" src="./images/playstore.png" alt="sdf">
+            </a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p style="margin-left:2em; font-size:large; color:red">**This is a demo website for training purpose only. It has no connection with or have intention to replicate the original Tanishq website.</p>
+    </div>
+    </footer>
+    
         `
     });
     return app; 
