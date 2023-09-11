@@ -1,6 +1,6 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js'
 import { Slider } from './slider';
-import {categories, collection} from './categories';
+import {categories, collection} from './productdata';
 let app;
 const initMainApp = function(){
     app = createApp({props:[]},{properties:[]});
@@ -16,7 +16,7 @@ const initMainApp = function(){
         methods:{},
         template:`
         <div class="headerPanel" :style="{'opacity': showPropertyMode ? '0.5':'1'}">
-            <figure class="logo">
+            <figure class="logo" onclick="location.href='#'">
                 <img src="./images/tanishqlogo.svg">
             </figure>
             <div class="searchbox"><span class="searchplaceholder">Search for Gold Jewellery, Diamond Jewellery and more...</span></div>

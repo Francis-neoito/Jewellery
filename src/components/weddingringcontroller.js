@@ -1,4 +1,5 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js'
+import { weddrings } from './productdata';
 
 let app;
 const initWedRingMainApp = function(){
@@ -15,7 +16,7 @@ const initWedRingMainApp = function(){
         methods:{},
         template:`
         <div class="headerPanel" :style="{'opacity': showPropertyMode ? '0.5':'1'}">
-            <figure class="logo">
+            <figure class="logo" onclick="location.href='/Jewellery/index.html'">
                 <img src="./images/tanishqlogo.svg">
             </figure>
             <div class="searchbox"><span class="searchplaceholder">Search for Gold Jewellery, Diamond Jewellery and more...</span></div>
@@ -139,17 +140,31 @@ const initWedRingMainApp = function(){
         props:[],
         data(){
             return{
-                categories: [],
-                categoryColSize: 5,
-                collections: [],
-                collectionColSize: 3,
+                weddrings: [],
+                weddringColSize: 4,
             };
         },
         created(){
+            this.weddrings = weddrings;
         },
         mounted(){
         },
-        methods:{},
+        methods:{
+            getWeddringRowNum(){
+                return Math.ceil(this.weddrings.length/this.weddringColSize);
+            },
+            getWeddringIndex(row,col){
+                return (row-1)*this.weddringColSize + (col);
+            },
+            isCellAvailable(row,col){
+                if(this.getWeddringIndex(row,col) > this.weddrings.length)
+                    return false;
+                return true;
+            },
+            openCategory(cat){
+
+            }
+        },
         template:`
         <headercmp></headercmp>
         <div id="weddingRingAdArea">
@@ -162,6 +177,36 @@ const initWedRingMainApp = function(){
                 <div id="customizeButtonCircle"><img style="height:1.2em;width:1.2em" src="./images/edit.svg"/></div>
             </div>
             </div>
+        </div>
+        <div class="categoryHeadBlock">
+            <div class="categoryHead"><h4>Wedding Rings</h4></div>
+            <div class="categoryHeadSub"><p>Browse through our vast collection to find the perfect one as yours!</p></div>
+            <img src="./images/Line-Design.svg" style="margin-top: -20px;"/>
+        </div>
+        <div class="categoryBlock">
+            <table class="catagoryTable" style="width: 95%">
+                <tr v-for="row in Number(getWeddringRowNum())" style="padding-bottom:1em">
+                    <td class="categoryGrid" v-for="col in Number(weddringColSize)" style="padding-bottom: 1.5em;">
+                        <div style="border: 1px solid rgb(43,24,25,0.7);width: 92%;cursor: default;" class="categoryItemBlock" v-if="isCellAvailable(row,col)" @click="openCategory(weddrings[getWeddringIndex(row,col)-1])">
+                            <div class="categoryImgContainer"><img style="width:100%; cursor: pointer;" :src="'./images/'+ weddrings[getWeddringIndex(row,col)-1].imgSrc"></div>
+                            <div class="categoryTitleContainer" style="padding-left:1em;color: #222;border-top: 1px solid rgb(43,24,25,0.7);margin-bottom:1rem">
+                                <h4 style="max-width:90%; overflow:hidden;margin-bottom:0;font-weight:bold;font-size:0.9rem">{{weddrings[getWeddringIndex(row,col)-1].name}}</h4>
+                                <span class="p-price">&#8377; {{weddrings[getWeddringIndex(row,col)-1].price}}</span>
+                                <span class="p-gender">{{weddrings[getWeddringIndex(row,col)-1].gender}} | {{weddrings[getWeddringIndex(row,col)-1].category}}</span>
+                                <div class="exploreButtonBox">Explore</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="width:88%;height:4em;margin:auto;display:flex;justify-content: center;border-top: 1px solid #361a1a2e; padding-top:2em">
+            <div style="width:10em" class="exploreButtonBox">Load More</div>
+        </div>
+        <div class="categoryHeadBlock">
+            <div class="categoryHead"><h4>Connect With Us</h4></div>
+            <div class="categoryHeadSub"><p>We are always available to guide you at your convenience.</p></div>
+            <img src="./images/Line-Design.svg" style="margin-top: -20px;"/>
         </div>
         <footercmp></footercmp>
         `
