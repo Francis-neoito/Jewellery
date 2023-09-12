@@ -95,28 +95,28 @@ const initMainApp = function(){
         <div style="display:flex; flex-direction:row;">
         <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Useful Links</h2>
             <ul id="collapsible-links" class="menu-footer content">
-            <li><a class="gtm-footer-link" href="#" title="Delivery Information" target="_blank">Delivery Information</a></li>
-            <li><a class="gtm-footer-link" href="#" title="International Shipping" target="_blank">International Shipping</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Payment Options" target="_blank">Payment Options</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Track your Order" target="_blank">Track your Order</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Returns" target="_blank">Returns</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Find a Store" target="_blank">Find a Store</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Delivery Information" >Delivery Information</a></li>
+            <li><a class="gtm-footer-link" href="#" title="International Shipping" >International Shipping</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Payment Options" >Payment Options</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Track your Order" >Track your Order</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Returns" >Returns</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Find a Store" >Find a Store</a></li>
             </ul>
         </div>
         <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Information</h2>
             <ul id="collapsible-links" class="menu-footer content">
-            <li><a class="gtm-footer-link" href="#" title="Delivery Information" target="_blank">Careers</a></li>
-            <li><a class="gtm-footer-link" href="#" title="International Shipping" target="_blank">Blog</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Payment Options" target="_blank">Offers & Contest Details</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Track your Order" target="_blank">Help & FAQs</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Returns" target="_blank">About Tanishq</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Delivery Information" >Careers</a></li>
+            <li><a class="gtm-footer-link" href="#" title="International Shipping" >Blog</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Payment Options" >Offers & Contest Details</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Track your Order" >Help & FAQs</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Returns" >About Tanishq</a></li>
             </ul>
         </div>
         <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Contact Us</h2>
             <ul id="collapsible-links" class="menu-footer content">
-            <li><a class="gtm-footer-link" href="#" title="Delivery Information" target="_blank">Write to Us</a></li>
-            <li><a class="gtm-footer-link" href="#" title="International Shipping" target="_blank">1800-266-0123</a></li>
-            <li><a class="gtm-footer-link" href="#" title="Payment Options" target="_blank">Chat with Us</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Delivery Information" >Write to Us</a></li>
+            <li><a class="gtm-footer-link" href="#" title="International Shipping" >1800-266-0123</a></li>
+            <li><a class="gtm-footer-link" href="#" title="Payment Options" >Chat with Us</a></li>
             </ul>
         </div>
         <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Download</h2>
@@ -237,7 +237,7 @@ const initMainApp = function(){
                     <div class="categoryItemBlock" style="width:95%" v-if="isCollectionCellAvailable(row,col)">
                         <div class="categoryImgContainer"><img style="width:100%" :src="'./images/'+ collections[getCategoryIndex(row,col)-1].imgSrc"></div>
                         <div class="categoryTitleContainer" style="flex-direction: row;justify-content: flex-start; margin-bottom:0">
-                            <h3 style="text-align:left;margin-left:1em;width:50%">{{collections[getCollectionIndex(row,col)-1].name}}</h3>
+                            <h3 style="text-align:left;margin-left:1em;width:50%;">{{collections[getCollectionIndex(row,col)-1].name}}</h3>
                             <span class="exploreButton" style="float:right;justify-content: center; align-items: center;display:flex;">
                                 Explore &nbsp;<span class="hide">&nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;</span> ></span>
                         </div>
