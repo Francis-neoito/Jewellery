@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import CustomMaterialConfigPlugin from './custommaterialconfig';
 let app;
 const initWedRingMainApp = function(){
     app = createApp({props:[]},{properties:[]});
@@ -148,6 +149,7 @@ const initWedRingMainApp = function(){
             return{
                 isLoaded: false,
                 loadPercentage:0,
+                nightMode:true,
             };
         },
         created(){
@@ -156,6 +158,7 @@ const initWedRingMainApp = function(){
             });
         },
         mounted(){
+            document.documentElement.className = 'night';
             // setTimeout(()=>{this.loadPercentage = 10},500);
             // setTimeout(()=>{this.initScene();},1000);
             this.loadPercentage = 10;
@@ -163,7 +166,7 @@ const initWedRingMainApp = function(){
         },
         unmounted(){
             // this.destroyInstance();
-            this.viewer.removePlugin(WEBGI.MaterialConfiguratorPlugin,true);
+            // this.viewer.removePlugin(WEBGI.MaterialConfiguratorPlugin,true);
             this.viewer.renderer.refreshPipeline();
             this.viewer.scene.disposeSceneModels()
             this.viewer.dispose();
@@ -180,32 +183,51 @@ const initWedRingMainApp = function(){
             }
         },
         methods:{
+            toggleSceneMode(){
+                this.nightMode = !this.nightMode;
+                const bg =document.getElementById('customizeEditorContainer');
+                const close = document.getElementById('closeEditorDiv');
+                if(this.nightMode){
+                    document.documentElement.className = 'night';
+                }else{
+                    document.documentElement.className = 'day';
+                }
+            },
             async initWebGI(){
                 this.loadPercentage = 50;
                 this.viewer = new WEBGI.ViewerApp({
                     canvas: document.getElementById('editorSceneBlock'),
                     alpha:true,
                     isAntialiased: true,
+                    useRgbm: true
                   }) ;
                 const manager = new WEBGI.AssetManagerPlugin();
                 await this.viewer.addPlugin(manager);
-                await this.viewer.addPlugin(WEBGI.TonemapPlugin);
+               /* await this.viewer.addPlugin(WEBGI.TonemapPlugin);
                 const pp =await this.viewer.addPlugin(WEBGI.ProgressivePlugin);;
                 await this.viewer.addPlugin(WEBGI.SSRPlugin);
                 const diamondPlugin = await this.viewer.addPlugin(WEBGI.DiamondPlugin);
                 await this.viewer.addPlugin(WEBGI.SSAOPlugin);
-                const aa = await this.viewer.addPlugin(WEBGI.TemporalAAPlugin);
+                const ta = await this.viewer.addPlugin(WEBGI.TemporalAAPlugin);
                 await this.viewer.addPlugin(WEBGI.GroundPlugin);
                 const bloom = await this.viewer.addPlugin(WEBGI.BloomPlugin);
-                // const matConfig = await this.viewer.addPlugin(WEBGI.MaterialConfiguratorPlugin);
+                const matConfig = await this.viewer.addPlugin(WEBGI.MaterialConfiguratorPlugin);*/
+                await WEBGI.addBasePlugins(this.viewer);
+                await this.viewer.addPlugin(CustomMaterialConfigPlugin);
                 this.viewer.renderer.refreshPipeline();
-                pp.enabled = true;
-                aa.enabled = true;
+                // pp.enabled = true;
+                // ta.enabled = true;
+                //To clickbackground
+                // viewer.getPlugin(TonemapPlugin).config.clipBackground = true;
+
                 const options = {autoScale: false}
-                const assets = await manager.addFromPath("./objects/springgreen.glb", options)
-                // this.viewer.scene.environment = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
+                const assets = await manager.addFromPath("./objects/ring1.glb", options);
+                this.viewer.scene.environment = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
                 // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/aircraft_workshop_01_1k.hdr'});
-                this.viewer.scene.envMapIntensity=1.5;
+                // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
+                // diamondPlugin.envMapIntensity = 1.5;
+                this.viewer.scene.envMapIntensity=0.5;
+                // this.viewer.scene.
                 
                 this.loadPercentage = 100;
                 this.viewer.removePlugin(WEBGI.MaterialConfiguratorPlugin,true);
@@ -312,6 +334,13 @@ const initWedRingMainApp = function(){
                 <div id="loader"></div>
             </div>
             <canvas id="editorSceneBlock" height="100%" width="100%"></canvas>
+            <div id="sceneBackgroundControlDiv">
+                <img v-if="nightMode" id="moon" src="./images/moon.svg" @click="toggleSceneMode()">
+                <img v-if="!nightMode" id="moon" src="./images/daymode.svg" @click="toggleSceneMode()">
+            </div>
+            <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorBlock">
+            </div>
+            <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfigurator"></div>
     `});
 
     app.component('wedapp',{
