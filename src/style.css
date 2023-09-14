@@ -198,12 +198,12 @@ padding: 0 2em;
 
 #sliderExploreButton{
   position: absolute;
-  width: 40%;
+  width: 30%;
   top: calc(25vh);
   padding: 0 2em;
   z-index: 20;
   height: 67vh;
-  left: 49vw;
+  right: 8em;
   cursor: pointer;
 }
 
@@ -857,7 +857,7 @@ li{
   left: 0;
 }
 
-#moon{
+.sceneOptionButtons{
   height: 2em;
   width: 2em;
   margin-left: 2em;
@@ -866,7 +866,7 @@ li{
   cursor: pointer;
   transition: 0.5s;
 }
-#moon:hover{
+.sceneOptionButtons:hover{
   opacity: 0.8;
 }
 

@@ -150,6 +150,7 @@ const initWedRingMainApp = function(){
                 isLoaded: false,
                 loadPercentage:0,
                 nightMode:true,
+                turnTable: true,
             };
         },
         created(){
@@ -193,6 +194,16 @@ const initWedRingMainApp = function(){
                     document.documentElement.className = 'day';
                 }
             },
+            toggleTurnTable(){
+                this.turnTable = !this.turnTable;
+                
+                if(this.turnTable){
+                    this.controls.autoRotate = true;
+                    this.controls.autoRotateSpeed = 1;
+                }else{
+                    this.controls.autoRotate = false;
+                }
+            },
             async initWebGI(){
                 this.loadPercentage = 50;
                 this.viewer = new WEBGI.ViewerApp({
@@ -214,12 +225,12 @@ const initWedRingMainApp = function(){
                 const matConfig = await this.viewer.addPlugin(WEBGI.MaterialConfiguratorPlugin);*/
                 await WEBGI.addBasePlugins(this.viewer);
                 await this.viewer.addPlugin(CustomMaterialConfigPlugin);
+                const camViews = this.viewer.getPlugin(WEBGI.CameraViewPlugin)
                 this.viewer.renderer.refreshPipeline();
                 // pp.enabled = true;
                 // ta.enabled = true;
                 //To clickbackground
-                // viewer.getPlugin(TonemapPlugin).config.clipBackground = true;
-
+                // this.viewer.getPlugin(WEBGI.TonemapPlugin).config.clipBackground = false;
                 const options = {autoScale: false}
                 const assets = await manager.addFromPath("./objects/ring1.glb", options);
                 this.viewer.scene.environment = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
@@ -227,12 +238,10 @@ const initWedRingMainApp = function(){
                 // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
                 // diamondPlugin.envMapIntensity = 1.5;
                 this.viewer.scene.envMapIntensity=0.5;
-                // this.viewer.scene.
-                
+                this.controls = this.viewer.scene.activeCamera.controls;
+                this.controls.autoRotate = this.turnTable;
+                this.controls.autoRotateSpeed = 1;
                 this.loadPercentage = 100;
-                this.viewer.removePlugin(WEBGI.MaterialConfiguratorPlugin,true);
-
-            
             },
             initScene(){
                 this.dom = document.getElementById("editorSceneBlock");
@@ -335,8 +344,19 @@ const initWedRingMainApp = function(){
             </div>
             <canvas id="editorSceneBlock" height="100%" width="100%"></canvas>
             <div id="sceneBackgroundControlDiv">
-                <img v-if="nightMode" id="moon" src="./images/moon.svg" @click="toggleSceneMode()">
-                <img v-if="!nightMode" id="moon" src="./images/daymode.svg" @click="toggleSceneMode()">
+                <img v-if="nightMode" class="sceneOptionButtons" src="./images/moon.svg" @click="toggleSceneMode()">
+                <img v-if="!nightMode" class="sceneOptionButtons" src="./images/daymode.svg" @click="toggleSceneMode()">
+                <svg v-if="turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
+                    <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
+                    <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
+                </svg>
+                <svg v-if="!turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
+                    <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
+                    <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
+                    <path d="M20 2 L2 20"/>
+                </svg>
             </div>
             <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorBlock">
             </div>

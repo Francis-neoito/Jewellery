@@ -241,7 +241,7 @@ class Slider {
     }
 
     timer(){
-      this.autoTimer = window.setInterval(this.nextSlide, 5000);
+      this.autoTimer = window.setInterval(this.nextSlide, 3000);
     }
     
     render() {
