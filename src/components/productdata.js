@@ -138,4 +138,63 @@ const weddrings = [
     
 ];
 
-export {categories, collection, weddrings};
+const baseRingModelData = [
+    {
+        id: '1',
+        name: '',
+        objSrc: 'baseRing1.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing1.jpg',
+    },
+    {
+        id: '2',
+        name: '',
+        objSrc: 'baseRing2.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing2.jpg',
+    },
+    {
+        id: '3',
+        name: '',
+        objSrc: 'baseRing3.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing3.jpg',
+    },
+    {
+        id: '4',
+        name: '',
+        objSrc: 'baseRing4.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing4.jpg',
+    },
+    {
+        id: '5',
+        name: '',
+        objSrc: 'baseRing5.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing5.jpg',
+    },
+    {
+        id: '6',
+        name: '',
+        objSrc: 'baseRing6.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing6.jpg',
+    },
+    {
+        id: '7',
+        name: '',
+        objSrc: 'baseRing7.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing7.jpg',
+    },
+    {
+        id: '8',
+        name: '',
+        objSrc: 'baseRing8.glb',
+        category: 'Finger Ring',
+        imgSrc: 'baseRing8.jpg',
+    }
+];
+
+export {categories, collection, weddrings, baseRingModelData};

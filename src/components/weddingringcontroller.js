@@ -1,5 +1,5 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js'
-import { weddrings } from './productdata';
+import { baseRingModelData, weddrings } from './productdata';
 import * as THREE from 'three';
 import * as WEBGI from 'webgi';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -142,28 +142,73 @@ const initWedRingMainApp = function(){
         </footer>
    `});
 
+    app.component('ringModelSelector',{
+        props:['ringData'],
+        data(){
+            return{};
+        },
+        created(){
+
+        },
+        mounted(){
+            const ringSelectorContainer= document.getElementById('ringSelectorContainer');
+            if(this.ringData.length < 5){
+                ringSelectorContainer.style.justifyContent = "center";
+            }
+            ringSelectorContainer.addEventListener('wheel',function(e) {
+                const race = 50;
+                if (e.deltaY > 0)
+                    ringSelectorContainer.scrollLeft += race;
+                else
+                    ringSelectorContainer.scrollLeft -= race;
+                    e.preventDefault();
+            });
+        },
+        methods:{
+            openModel(id){
+                this.$emit('openBaseModel',id);
+            }
+        },
+        template:`
+            <div id="ringSelectorDiv">
+                <div id="ringSelectorBlock">
+                    <div id="ringSelectorContainer">
+                        <div class="ringCatalogContainer" v-for="ring in ringData" @click="openModel(ring.id)">
+                            <img class="ringSelectorCatalogImage" :src="'./images/'+ring.imgSrc">
+                        </div>
+                    </div>
+                </div>
+                <div id="selectorTitle">Select Base Model</div>
+            </div>
+        `
+    });
 
     app.component('editorscene',{
         props:['editMode'],
         data(){
             return{
+                isLoading: false,
                 isLoaded: false,
                 loadPercentage:0,
                 nightMode:true,
-                turnTable: true,
+                turnTable: false,
+                ringCatalogs:[],
+                showBaseModelSelectMenu: false,
+                selectedModel: null,
             };
         },
         created(){
             document.addEventListener('removethreeinstance',()=>{
-
             });
+            this.ringCatalogs = baseRingModelData;
         },
         mounted(){
             document.documentElement.className = 'night';
+            setTimeout(()=>{this.openBaseModelSelectorMenu()},300);
             // setTimeout(()=>{this.loadPercentage = 10},500);
             // setTimeout(()=>{this.initScene();},1000);
             this.loadPercentage = 10;
-            setTimeout(()=>{this.initWebGI();},1000);
+            // setTimeout(()=>{this.initWebGI();},1000);
         },
         unmounted(){
             // this.destroyInstance();
@@ -179,11 +224,65 @@ const initWedRingMainApp = function(){
                     loader.style.width = this.loadPercentage + '%';
                 }
                 if(val===100){
+                    this.isLoading = false;
                     this.isLoaded = true;
                 }
-            }
+            },
         },
         methods:{
+            openBaseModelSelectorMenu(){
+                this.showBaseModelSelectMenu = true;
+            },
+            openBaseModelForEdit(id){
+                const selectedModel = this.ringCatalogs.filter((o)=> (o.id === id))[0];
+                if(selectedModel!=null){
+                    this.selectedModel = selectedModel;
+                    this.showBaseModelSelectMenu = false;
+                    setTimeout(()=>{this.initWebGI();},1000);
+                }else{
+                    alert("Model not found");
+                }
+            },
+            async initWebGI(){
+                console.log("called");
+                this.isLoading = true;
+                this.loadPercentage = 5;
+                this.viewer = new WEBGI.ViewerApp({
+                    canvas: document.getElementById('editorSceneBlock'),
+                    isAntialiased: true,
+                    useRgbm: true
+                  }) ;
+                const manager = new WEBGI.AssetManagerPlugin();
+                await this.viewer.addPlugin(manager);
+               /* await this.viewer.addPlugin(WEBGI.TonemapPlugin);
+                const pp =await this.viewer.addPlugin(WEBGI.ProgressivePlugin);;
+                await this.viewer.addPlugin(WEBGI.SSRPlugin);
+                const diamondPlugin = await this.viewer.addPlugin(WEBGI.DiamondPlugin);
+                await this.viewer.addPlugin(WEBGI.SSAOPlugin);
+                const ta = await this.viewer.addPlugin(WEBGI.TemporalAAPlugin);
+                await this.viewer.addPlugin(WEBGI.GroundPlugin);
+                const bloom = await this.viewer.addPlugin(WEBGI.BloomPlugin);
+                const matConfig = await this.viewer.addPlugin(WEBGI.MaterialConfiguratorPlugin);*/
+
+                await WEBGI.addBasePlugins(this.viewer);
+                await this.viewer.addPlugin(CustomMaterialConfigPlugin);
+                const camViews = this.viewer.getPlugin(WEBGI.CameraViewPlugin);
+                this.viewer.renderer.refreshPipeline();
+                // pp.enabled = true;
+                // ta.enabled = true;
+                //To clickbackground
+                this.viewer.getPlugin(WEBGI.TonemapPlugin).config.clipBackground = true;
+                const options = {autoScale: false}
+                const assets = await manager.addFromPath("./objects/"+ this.selectedModel.objSrc, options).then(this.loadPercentage = 100);
+                this.viewer.scene.environment = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
+                // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/aircraft_workshop_01_1k.hdr'});
+                // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
+                // diamondPlugin.envMapIntensity = 1.5;
+                // this.viewer.scene.envMapIntensity=1.5;
+                this.controls = this.viewer.scene.activeCamera.controls;
+                this.controls.autoRotate = this.turnTable;
+                this.controls.autoRotateSpeed = 0.8;
+            },
             toggleSceneMode(){
                 this.nightMode = !this.nightMode;
                 const bg =document.getElementById('customizeEditorContainer');
@@ -204,52 +303,14 @@ const initWedRingMainApp = function(){
                     this.controls.autoRotate = false;
                 }
             },
-            async initWebGI(){
-                this.loadPercentage = 50;
-                this.viewer = new WEBGI.ViewerApp({
-                    canvas: document.getElementById('editorSceneBlock'),
-                    alpha:true,
-                    isAntialiased: true,
-                    useRgbm: true
-                  }) ;
-                const manager = new WEBGI.AssetManagerPlugin();
-                await this.viewer.addPlugin(manager);
-               /* await this.viewer.addPlugin(WEBGI.TonemapPlugin);
-                const pp =await this.viewer.addPlugin(WEBGI.ProgressivePlugin);;
-                await this.viewer.addPlugin(WEBGI.SSRPlugin);
-                const diamondPlugin = await this.viewer.addPlugin(WEBGI.DiamondPlugin);
-                await this.viewer.addPlugin(WEBGI.SSAOPlugin);
-                const ta = await this.viewer.addPlugin(WEBGI.TemporalAAPlugin);
-                await this.viewer.addPlugin(WEBGI.GroundPlugin);
-                const bloom = await this.viewer.addPlugin(WEBGI.BloomPlugin);
-                const matConfig = await this.viewer.addPlugin(WEBGI.MaterialConfiguratorPlugin);*/
-                await WEBGI.addBasePlugins(this.viewer);
-                await this.viewer.addPlugin(CustomMaterialConfigPlugin);
-                const camViews = this.viewer.getPlugin(WEBGI.CameraViewPlugin)
-                this.viewer.renderer.refreshPipeline();
-                // pp.enabled = true;
-                // ta.enabled = true;
-                //To clickbackground
-                // this.viewer.getPlugin(WEBGI.TonemapPlugin).config.clipBackground = false;
-                const options = {autoScale: false}
-                const assets = await manager.addFromPath("./objects/ring1.glb", options);
-                this.viewer.scene.environment = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
-                // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/aircraft_workshop_01_1k.hdr'});
-                // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
-                // diamondPlugin.envMapIntensity = 1.5;
-                this.viewer.scene.envMapIntensity=0.5;
-                this.controls = this.viewer.scene.activeCamera.controls;
-                this.controls.autoRotate = this.turnTable;
-                this.controls.autoRotateSpeed = 1;
-                this.loadPercentage = 100;
-            },
         },
         template:`
-            <div id="editorLoader" v-if="!isLoaded">
+            <div id="editorLoader" v-if="isLoading">
                 <div id="loader"></div>
             </div>
+            <ringModelSelector v-if="showBaseModelSelectMenu" :ringData=ringCatalogs @openBaseModel="(id)=>openBaseModelForEdit(id)"></ringModelSelector>
             <canvas id="editorSceneBlock" height="100%" width="100%"></canvas>
-            <div id="sceneBackgroundControlDiv">
+            <div v-if="isLoaded" id="sceneBackgroundControlDiv">
                 <img v-if="nightMode" class="sceneOptionButtons" src="./images/moon.svg" @click="toggleSceneMode()">
                 <img v-if="!nightMode" class="sceneOptionButtons" src="./images/daymode.svg" @click="toggleSceneMode()">
                 <svg v-if="turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
