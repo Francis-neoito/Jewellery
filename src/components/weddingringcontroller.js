@@ -11,7 +11,7 @@ let app;
 const initWedRingMainApp = function(){
     app = createApp({props:[]},{properties:[]});
     app.component('headercmp',{
-        props:[],
+        props:['onlybanner'],
         data(){
             return{};
         },
@@ -51,7 +51,7 @@ const initWedRingMainApp = function(){
                 </ul>
             </nav>
         </div>
-        <div class="menuNavBar">
+        <div class="menuNavBar" v-if="!onlybanner">
             <nav class="nav">
                 <ul class="slider-ul">
                     <li class="slider-li-menu slider-li">
@@ -170,6 +170,7 @@ const initWedRingMainApp = function(){
             }
         },
         template:`
+            <div style="background: #535353;opacity: 0.2;height: 100%;width: 100%;position: absolute;filter: blur(1px);z-index:120"></div>
             <div id="ringSelectorDiv">
                 <div id="ringSelectorBlock">
                     <div id="ringSelectorContainer">
@@ -207,9 +208,11 @@ const initWedRingMainApp = function(){
             setTimeout(()=>{this.openBaseModelSelectorMenu()},300);
         },
         unmounted(){
-            this.viewer.renderer.refreshPipeline();
-            this.viewer.scene.disposeSceneModels()
-            this.viewer.dispose();
+            if(this.viewer!=null){
+                this.viewer.renderer.refreshPipeline();
+                this.viewer.scene.disposeSceneModels()
+                this.viewer.dispose();
+            }
         },
         watch:{
             loadPercentage: function(val){
@@ -228,6 +231,11 @@ const initWedRingMainApp = function(){
                 this.showBaseModelSelectMenu = true;
             },
             openBaseModelForEdit(id){
+                if(this.viewer!=null){
+                    this.viewer.renderer.refreshPipeline();
+                    this.viewer.scene.disposeSceneModels()
+                    this.viewer.dispose();
+                }
                 const selectedModel = this.ringCatalogs.filter((o)=> (o.id === id))[0];
                 if(selectedModel!=null){
                     this.isLoading = true;
@@ -259,7 +267,7 @@ const initWedRingMainApp = function(){
                 const matConfig = await this.viewer.addPlugin(WEBGI.MaterialConfiguratorPlugin);*/
 
                 await WEBGI.addBasePlugins(this.viewer);
-                await this.viewer.addPlugin(CustomMaterialConfigPlugin);
+                const matPlugin = await this.viewer.addPlugin(CustomMaterialConfigPlugin);
                 const camViews = this.viewer.getPlugin(WEBGI.CameraViewPlugin);
                 this.viewer.renderer.refreshPipeline();
                 // pp.enabled = true;
@@ -300,8 +308,12 @@ const initWedRingMainApp = function(){
                     this.controls.autoRotate = false;
                 }
             },
+            closeEditor(){
+                this.$emit('closeEditorEvent');
+            },
         },
         template:`
+            <headercmp :onlybanner="true"></headercmp>
             <div id="editorLoader" v-if="isLoading">
                 <div id="loader"></div>
             </div>
@@ -324,7 +336,14 @@ const initWedRingMainApp = function(){
             </div>
             <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorBlock">
             </div>
-            <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfigurator"></div>
+            <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorContainer">
+                <div id="modeTitleBlock" v-if="isLoaded">
+                    <span class="modelTitle">{{selectedModel.name}}</span>
+                    <div id="ringSettings" @click="openBaseModelSelectorMenu()" title="Change Base Model"><img style="height:100%;width:100%" src="./images/setting.svg"></div>
+                </div>
+                <div id="mconfigurator"></div>
+            </div>
+            <div id="closeEditorDiv" @click="closeEditor()" title="Close Customizer">x</div>
     `});
 
     app.component('wedapp',{
@@ -359,9 +378,9 @@ const initWedRingMainApp = function(){
                 this.customizeMode = true;
                 const editorContainer = document.getElementById('customizeEditorContainer');
                 if(editorContainer!=null){
-                    editorContainer.style.top= '0';
+                    editorContainer.style.top= '5rem';
                     editorContainer.style.left= '0';
-                    editorContainer.style.height = '100vh';
+                    editorContainer.style.height = 'calc(100vh - 5rem)';
                     editorContainer.style.width = '100vw';
                     editorContainer.style.opacity = '1';
                     document.getElementsByTagName('body')[0].style.overflow = 'hidden';
@@ -388,8 +407,7 @@ const initWedRingMainApp = function(){
         template:`
         <headercmp></headercmp>
         <div id="customizeEditorContainer">
-            <div id="closeEditorDiv" @click="closeCustomizEditor()">x</div>
-            <editorscene :editMode="customizeMode" v-if="customizeMode"></editorscene>
+            <editorscene :editMode="customizeMode" v-if="customizeMode" @closeEditorEvent="closeCustomizEditor()"></editorscene>
         </div>
         <div id="weddingRingAdArea">
             <div style="position:absolute;top: 25vh;left: 4em;">

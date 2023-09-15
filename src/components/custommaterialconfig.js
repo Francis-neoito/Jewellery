@@ -43,13 +43,13 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
             this.applyVariation(variation, material.uuid);
           };
           // Generate a UI from this data.
-          // console.log({
-          //   uid: material.uuid,
-          //   color: material.color,
-          //   material: material,
-          //   image,
-          //   onClick
-          // });
+          console.log({
+            uid: material.uuid,
+            color: material.color,
+            material: material,
+            image,
+            onClick
+          });
           const selectorDiv = document.createElement("div");
           selectorDiv.classList.add("variationSelector");
           selectorDiv.innerHTML = '<img class="variationImage" src="' + image + '" title="'+ material.name + '"/>';
