@@ -15,7 +15,6 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
       configuratorDiv.innerHTML = "";
   
       for (const variation of this.variations) {
-        console.log(variation.title);
         const container = document.createElement("div");
         container.classList.add("variations");
         container.innerHTML = "<span class=\"variationTitle\"> "+ variation.title;
@@ -23,8 +22,6 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
         const varTile = document.createElement("div");
         varTile.classList.add("variationTile");
         container.appendChild(varTile);
-
-  
         variation.materials.map((material) => {
           // material is the variation that can be applied to an object
   
@@ -46,13 +43,13 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
             this.applyVariation(variation, material.uuid);
           };
           // Generate a UI from this data.
-          console.log({
-            uid: material.uuid,
-            color: material.color,
-            material: material,
-            image,
-            onClick
-          });
+          // console.log({
+          //   uid: material.uuid,
+          //   color: material.color,
+          //   material: material,
+          //   image,
+          //   onClick
+          // });
           const selectorDiv = document.createElement("div");
           selectorDiv.classList.add("variationSelector");
           selectorDiv.innerHTML = '<img class="variationImage" src="' + image + '" title="'+ material.name + '"/>';

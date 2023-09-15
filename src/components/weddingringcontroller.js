@@ -205,14 +205,8 @@ const initWedRingMainApp = function(){
         mounted(){
             document.documentElement.className = 'night';
             setTimeout(()=>{this.openBaseModelSelectorMenu()},300);
-            // setTimeout(()=>{this.loadPercentage = 10},500);
-            // setTimeout(()=>{this.initScene();},1000);
-            this.loadPercentage = 10;
-            // setTimeout(()=>{this.initWebGI();},1000);
         },
         unmounted(){
-            // this.destroyInstance();
-            // this.viewer.removePlugin(WEBGI.MaterialConfiguratorPlugin,true);
             this.viewer.renderer.refreshPipeline();
             this.viewer.scene.disposeSceneModels()
             this.viewer.dispose();
@@ -236,17 +230,17 @@ const initWedRingMainApp = function(){
             openBaseModelForEdit(id){
                 const selectedModel = this.ringCatalogs.filter((o)=> (o.id === id))[0];
                 if(selectedModel!=null){
+                    this.isLoading = true;
                     this.selectedModel = selectedModel;
                     this.showBaseModelSelectMenu = false;
-                    setTimeout(()=>{this.initWebGI();},1000);
+                    this.loadPercentage = 10;
+                    setTimeout(()=>{this.initWebGI();},10);
                 }else{
                     alert("Model not found");
                 }
             },
             async initWebGI(){
-                console.log("called");
-                this.isLoading = true;
-                this.loadPercentage = 5;
+                this.loadPercentage = 15;
                 this.viewer = new WEBGI.ViewerApp({
                     canvas: document.getElementById('editorSceneBlock'),
                     isAntialiased: true,
@@ -273,8 +267,10 @@ const initWedRingMainApp = function(){
                 //To clickbackground
                 this.viewer.getPlugin(WEBGI.TonemapPlugin).config.clipBackground = true;
                 const options = {autoScale: false}
-                const assets = await manager.addFromPath("./objects/"+ this.selectedModel.objSrc, options).then(this.loadPercentage = 100);
+                const assets = await manager.addFromPath("./objects/"+ this.selectedModel.objSrc, options);
+                this.loadPercentage = 80;
                 this.viewer.scene.environment = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
+                this.loadPercentage = 90;
                 // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/aircraft_workshop_01_1k.hdr'});
                 // diamondPlugin.envMap = await manager.importer.importSingle({path:'./images/gem_2.hdr'});
                 // diamondPlugin.envMapIntensity = 1.5;
@@ -282,6 +278,7 @@ const initWedRingMainApp = function(){
                 this.controls = this.viewer.scene.activeCamera.controls;
                 this.controls.autoRotate = this.turnTable;
                 this.controls.autoRotateSpeed = 0.8;
+                this.loadPercentage = 100;
             },
             toggleSceneMode(){
                 this.nightMode = !this.nightMode;
