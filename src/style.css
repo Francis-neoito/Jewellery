@@ -827,7 +827,7 @@ li{
   left: 0;
   height: 100%;
   width: calc(100% - 30vw);  
-  background-image: radial-gradient(rgb(39, 39, 39),rgb(11, 11, 11));
+  background-image: var(--bg-image);
   z-index: 120;
   display: flex;
   align-items: center;
@@ -988,6 +988,15 @@ li{
   height: 3em;
   width: 3em;
   margin: auto;
+  padding: 0.2em;
+  box-shadow: 0 0 0.5em 0.1em #0000003b;
+  border-radius: 0.5em;
+  border: 1px solid #aeaeae;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.variationImage:hover{
+  border: 1px solid #1b6edb;
 }
 
 #ringSelectorDiv{
