@@ -142,6 +142,7 @@ const baseRingModelData = [
     {
         id: '1',
         name: 'Crysta Cubical Spiral Ring',
+        sizes: [5,7,9,10],
         objSrc: 'baseRing1.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing1.jpg',
@@ -149,6 +150,7 @@ const baseRingModelData = [
     {
         id: '2',
         name: 'Tanishq Olive Leaf Ring',
+        sizes: [6,8,9,11],
         objSrc: 'baseRing2.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing2.jpg',
@@ -156,6 +158,7 @@ const baseRingModelData = [
     {
         id: '3',
         name: 'Pear Ring',
+        sizes: [5,7,9,10],
         objSrc: 'baseRing3.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing3.jpg',
@@ -163,6 +166,7 @@ const baseRingModelData = [
     {
         id: '4',
         name: 'Oval Crown Ring',
+        sizes: [5,7,9,10],
         objSrc: 'baseRing4.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing4.jpg',
@@ -170,6 +174,7 @@ const baseRingModelData = [
     {
         id: '5',
         name: 'Elisabeth Ring',
+        sizes: [6,8,9,11],
         objSrc: 'baseRing5.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing5.jpg',
@@ -177,6 +182,7 @@ const baseRingModelData = [
     {
         id: '6',
         name: 'Sara Cusion Ring',
+        sizes: [5,7,9,10],
         objSrc: 'baseRing6.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing6.jpg',
@@ -184,6 +190,7 @@ const baseRingModelData = [
     {
         id: '7',
         name: 'Sofia Angel Beauty Ring',
+        sizes: [5,7,9,10],
         objSrc: 'baseRing7.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing7.jpg',
@@ -191,6 +198,7 @@ const baseRingModelData = [
     {
         id: '8',
         name: 'Clover Gem Ring',
+        sizes: [6,8,9,11],
         objSrc: 'baseRing8.glb',
         category: 'Finger Ring',
         imgSrc: 'baseRing8.jpg',

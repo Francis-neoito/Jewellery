@@ -771,18 +771,20 @@ li{
 
 :root,
   :root.day{
-  --bg-image:radial-gradient(rgb(223, 187, 192) 50%,rgb(203, 141, 150));
-  --text-color:#4d0316;
-  --variation-text: #5b0e17d9;
-  --ringSettings:#b57887;
-  --ringSettingsHover:#c893a0;
+    --bg-image:radial-gradient(rgb(223, 187, 192) 50%,rgb(203, 141, 150));
+    --text-color:#4d0316;
+    --variation-text: #5b0e17d9;
+    --ringSettings:#b57887;
+    --ringSettingsHover:#c893a0;
+    --buttonBgColor: #4d0316;
   }
   :root.night{
     --bg-image:radial-gradient(rgb(39, 39, 39),rgb(11, 11, 11));
     --text-color:#ffffff;
     --variation-text: #bebebe;
-  --ringSettings:#505050;
+    --ringSettings:#505050;
     --ringSettingsHover:#686868;
+    --buttonBgColor: #0f0f0f;
   }
 
 #customizeEditorContainer{
@@ -911,7 +913,7 @@ li{
 #mconfiguratorContainer{
   overflow: hidden;
   position: absolute;
-  height: 95vh;
+  height: 95%;
   top: 2.5vh;
   right: 1vw;
   width: 30vw;
@@ -996,7 +998,7 @@ li{
   transition: 0.5s;
 }
 .variationImage:hover{
-  border: 1px solid #1b6edb;
+  border: 5px solid #0c74fc92;
 }
 
 #ringSelectorDiv{
@@ -1109,7 +1111,7 @@ li{
 }
 .ringCatalogContainer:hover{
  border: 5px solid rgba(30, 143, 255, 0.645);
- box-shadow: 0 0 0.2em 0.5em rgba(50, 50, 50, 0.655);
+ box-shadow: 0 0 0.8em 0.5em rgba(50, 50, 50, 0.408);
 }
 
 .ringSelectorCatalogImage{
@@ -1118,4 +1120,102 @@ li{
   width: 100%;
   border-radius: 0.3em;
   overflow: hidden;
+}
+
+#finalizeBlock{
+  position: absolute;
+  bottom: 0;
+  padding: 1em;
+  display: flex;
+  width: 93%;
+}
+
+#finalizeButtonContainer{
+  height: 3em;
+  width: 100%;
+}
+#backFinalize{
+  height: 2.5em;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  width: 30%;
+  background-color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid rgb(16, 16, 16);
+  transition: 0.3s;
+}
+#backFinalize:hover{
+  background-color: rgba(194, 0, 0, 0.476);
+  border: 1px solid aliceblue;
+  color: aliceblue;
+}
+#proceedFinalize{
+  height: 2.5em;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  width: calc(70% - 5px);
+  margin-left: 5px;
+  background-color: var(--buttonBgColor);
+  color: aliceblue;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgb(16, 16, 16);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+#proceedFinalize:hover{
+  color: rgb(244, 244, 244);
+  border: 1px solid rgb(16, 16, 16);
+}
+
+#proceedFinalize span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+#proceedFinalize span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+#proceedFinalize:hover span {
+  padding-right: 25px;
+}
+
+#proceedFinalize:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#sizeConfigBlock{
+  padding: 1em;
+}
+#sizeChart{
+  height: 2em;
+  display: flex;
+}
+.sizeOption{
+  height: 2em;
+  width: 2.5em;
+  font-size: 1.5em;
+  border: 2px solid var(--ringSettings);
+  border-radius: 5px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.sizeOption:hover{
+  border: 2px solid var(--buttonBgColor);
 }

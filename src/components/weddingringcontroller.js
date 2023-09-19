@@ -191,8 +191,8 @@ const initWedRingMainApp = function(){
                 isLoading: false,
                 isLoaded: false,
                 loadPercentage:0,
-                nightMode:true,
-                turnTable: false,
+                nightMode:false,
+                turnTable: true,
                 ringCatalogs:[],
                 showBaseModelSelectMenu: false,
                 selectedModel: null,
@@ -202,9 +202,13 @@ const initWedRingMainApp = function(){
             document.addEventListener('removethreeinstance',()=>{
             });
             this.ringCatalogs = baseRingModelData;
+            if(this.nightMode){
+                document.documentElement.className = 'night';
+            }else{
+                document.documentElement.className = 'day';
+            }
         },
         mounted(){
-            document.documentElement.className = 'night';
             setTimeout(()=>{this.openBaseModelSelectorMenu()},300);
         },
         unmounted(){
@@ -343,6 +347,18 @@ const initWedRingMainApp = function(){
                     <div id="ringSettings" @click="openBaseModelSelectorMenu()" title="Change Base Model"><img style="height:100%;width:100%" src="./images/setting.svg"></div>
                 </div>
                 <div id="mconfigurator"></div>
+                <div id="sizeConfigBlock" v-if="isLoaded">
+                    <div class="variationTitle">Size</div>
+                    <div id="sizeChart">
+                        <div class="sizeOption" v-for="size in selectedModel.sizes">{{size}}</div>
+                    </div>
+                </div>
+                <div id="finalizeBlock">
+                    <div id="finalizeButtonContainer">
+                        <button id="backFinalize" @click="closeEditor()">Cancel</button>
+                        <button id="proceedFinalize"><span>Preview </span></button>
+                    </div>
+                </div>
             </div>
             <div id="closeEditorDiv" @click="closeEditor()" title="Close Customizer">x</div>
     `});
