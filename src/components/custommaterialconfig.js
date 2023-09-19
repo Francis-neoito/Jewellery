@@ -1,4 +1,5 @@
 import {
+  Color,
     MaterialConfiguratorBasePlugin,
     imageBitmapToBase64, makeColorSvgCircle
   } from 'webgi';
@@ -24,7 +25,6 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
         container.appendChild(varTile);
         variation.materials.map((material) => {
           // material is the variation that can be applied to an object
-  
           let image;
           if (!variation.preview.startsWith("generate:")) {
             const pp = material[variation.preview] || "#ff00ff";
@@ -33,10 +33,12 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
             if (!image) image = makeColorSvgCircle(pp)
           } else {
             // Generate a small snapshot of the material preview based on some shape (optional)
-            image = this._previewGenerator.generate(
-              material,
-              variation.preview.split(":")[1]
-            );
+            const matColor = material.color;
+            image = makeColorSvgCircle(matColor.getHexString());
+            // image = this._previewGenerator.generate(
+            //   material,
+            //   variation.preview.split(":")[1]
+            // );
           }
           // callback to change the material variations
           const onClick = () => {

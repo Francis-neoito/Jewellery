@@ -978,14 +978,15 @@ li{
   white-space: break-spaces;
 }
 .variationSelector{
-  height: 4.2em;
-  width: 4.2em;
+  height: 4em;
+  width: 4em;
   margin-left: 5px;
   cursor: pointer;
+  display: flex;
 }
 .variationImage{
-  height: 4.2em;
-  width: 4.2em;
+  height: 3em;
+  width: 3em;
   margin: auto;
 }
 
