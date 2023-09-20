@@ -196,6 +196,9 @@ const initWedRingMainApp = function(){
                 ringCatalogs:[],
                 showBaseModelSelectMenu: false,
                 selectedModel: null,
+                selectedMetal: null,
+                selectedGem: null,
+                selectedSize: null,
             };
         },
         created(){
@@ -207,6 +210,29 @@ const initWedRingMainApp = function(){
             }else{
                 document.documentElement.className = 'day';
             }
+            document.addEventListener('materialchangeevent',(e)=>{
+                switch(e.detail.variation.toLowerCase()){
+                    case 'metal' : this.selectedMetal = e.detail.matuid;
+                                    for(const variation of document.getElementsByClassName('variationImage')){
+                                        if(variation.id.startsWith(e.detail.variation)){
+                                            variation.classList.remove("variationImageActive");
+                                        }
+                                    }
+                                    const metal = document.getElementById(this.selectedMetal);
+                                    metal.classList.add("variationImageActive");
+                                    break;
+                    case 'gem' : this.selectedGem = e.detail.matuid;
+                                    for(const variation of document.getElementsByClassName('variationImage')){
+                                        if(variation.id.startsWith(e.detail.variation)){
+                                            variation.classList.remove("variationImageActive");
+                                        }
+                                    }
+                                    const gem = document.getElementById(this.selectedGem);
+                                    gem.classList.add("variationImageActive");
+                                    break;
+                }
+
+            });
         },
         mounted(){
             setTimeout(()=>{this.openBaseModelSelectorMenu()},300);
@@ -231,6 +257,9 @@ const initWedRingMainApp = function(){
             },
         },
         methods:{
+            selectSize(size){
+                this.selectedSize = size;
+            },
             openBaseModelSelectorMenu(){
                 this.showBaseModelSelectMenu = true;
             },
@@ -244,6 +273,7 @@ const initWedRingMainApp = function(){
                 if(selectedModel!=null){
                     this.isLoading = true;
                     this.selectedModel = selectedModel;
+                    this.selectedSize = selectedModel.sizes[0];
                     this.showBaseModelSelectMenu = false;
                     this.loadPercentage = 10;
                     setTimeout(()=>{this.initWebGI();},10);
@@ -346,11 +376,21 @@ const initWedRingMainApp = function(){
                     <span class="modelTitle">{{selectedModel.name}}</span>
                     <div id="ringSettings" @click="openBaseModelSelectorMenu()" title="Change Base Model"><img style="height:100%;width:100%" src="./images/setting.svg"></div>
                 </div>
+                    <div class="priceEstimate" v-if="isLoaded" title="Proceed to preview for final price estimate">&#8377;{{selectedModel.basePrice}} <span>onwards</span>
+                    <div class="subDesc">Price may vary depending on the metal, gem, the final design selected. Click preview to see the final price breakup</div>
+                </div>
                 <div id="mconfigurator"></div>
-                <div id="sizeConfigBlock" v-if="isLoaded">
+                <div class="infoBlocks" v-if="isLoaded">
                     <div class="variationTitle">Size</div>
                     <div id="sizeChart">
-                        <div class="sizeOption" v-for="size in selectedModel.sizes">{{size}}</div>
+                        <div class="sizeOption" :class="selectedSize == size? 'sizeActive' : ''" v-for="size in selectedModel.sizes" @click="selectSize(size)">{{size}}</div>
+                    </div>
+                    <div class="subDesc" style="font-size:1.25em;margin-top:2em;font-family: serif;">Weight will increase as per the Size. Check Sizing Comparison</div>
+                </div>
+                <div class="infoBlocks" v-if="isLoaded">
+                    <div class="variationTitle">Description</div>
+                    <div id="descBlock">
+                        <span class="descText">{{selectedModel.description}}
                     </div>
                 </div>
                 <div id="finalizeBlock">

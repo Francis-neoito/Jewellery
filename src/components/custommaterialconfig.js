@@ -4,9 +4,19 @@ import {
     imageBitmapToBase64, makeColorSvgCircle
   } from 'webgi';
 
-
+const matChangeEvent = new CustomEvent('materialchangeevent',{detail: {
+  variation: '',
+  matuid: '',
+}})
 class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
     static PluginType = "MaterialConfiguratorPlugin";
+    
+    propagateMatChange = function(variation, matuid){
+      matChangeEvent.detail.variation = variation.title;
+      matChangeEvent.detail.matuid = matuid;
+      document.dispatchEvent(matChangeEvent);
+    }
+
     makeDiamondSvg = function(c) {
       const color1 = c.lerp(new Color("#000"),0.1).getHexString();
       const color4 = c.getHexString();
@@ -53,22 +63,25 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
           }
           // callback to change the material variations
           const onClick = () => {
+            this.propagateMatChange(variation, variation.title+material.uuid);
             this.applyVariation(variation, material.uuid);
           };
           // Generate a UI from this data.
-          console.log({
-            uid: material.uuid,
-            color: material.color,
-            material: material,
-            image,
-            onClick
-          });
+          // console.log({
+          //   uid: material.uuid,
+          //   color: material.color,
+          //   material: material,
+          //   image,
+          //   onClick
+          // });
           const selectorDiv = document.createElement("div");
           selectorDiv.classList.add("variationSelector");
-          selectorDiv.innerHTML = '<img class="variationImage" src="' + image + '" title="'+ material.name + '"/>';
+          selectorDiv.innerHTML = '<img class="variationImage" id="'+variation.title+material.uuid+'" src="' + image + '" title="'+ material.name + '"/>';
           selectorDiv.onclick = onClick;
           varTile.append(selectorDiv);
         });
+        this.propagateMatChange(variation, variation.title+variation.materials[0].uuid);
+        this.applyVariation(variation, variation.materials[0].uuid);
       }
       return true;
     }

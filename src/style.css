@@ -777,6 +777,8 @@ li{
     --ringSettings:#b57887;
     --ringSettingsHover:#c893a0;
     --buttonBgColor: #4d0316;
+    --subtitleColor: #65000bdb;
+    --thumbColor: #65000c0d;
   }
   :root.night{
     --bg-image:radial-gradient(rgb(39, 39, 39),rgb(11, 11, 11));
@@ -785,6 +787,8 @@ li{
     --ringSettings:#505050;
     --ringSettingsHover:#686868;
     --buttonBgColor: #0f0f0f;
+    --subtitleColor: #d2d2d2db;
+    --thumbColor: #6d6d6d15;
   }
 
 #customizeEditorContainer{
@@ -911,7 +915,7 @@ li{
 }
 
 #mconfiguratorContainer{
-  overflow: hidden;
+  /* overflow: hidden; */
   position: absolute;
   height: 95%;
   top: 2.5vh;
@@ -920,6 +924,7 @@ li{
   border-radius: 0.45rem;
   z-index: 100;
   overflow-x: hidden;
+  overflow-y: auto;
   transition: 0.4s ease-in;
 }
 
@@ -928,7 +933,8 @@ li{
   height: 100%; */
 }
 #modeTitleBlock{
-  padding: 0.5em 1em;
+  border-bottom: 1px solid #ffffff96;
+  margin: 0.5em 1em;
   font-family: sans-serif;
   color: rgb(242, 245, 248);
 }
@@ -937,6 +943,15 @@ li{
   font-weight: 600;
   line-height: 2.5em;
   width: 100%;
+}
+.priceEstimate{
+  padding: 0em 0.5em;
+  font-size: 2em;
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+.priceEstimate span{
+  font-size: 0.7em;
 }
 #ringSettings{
   height: 1.2em;
@@ -964,7 +979,7 @@ li{
 .variationTitle{
   display: block;
   margin-bottom: 0.5em;
-  font-size: 1em;
+  font-size: 1.2em;
   color: var(--variation-text);
   border-bottom: 1px solid #ffffff4d;
   padding-bottom: 0.3em;
@@ -999,6 +1014,12 @@ li{
 }
 .variationImage:hover{
   border: 5px solid #0c74fc92;
+}
+.variationImageActive{
+  border: 3px solid #ffffff;
+}
+.variationImageActive:hover{
+  border: 3px solid #ffffff;
 }
 
 #ringSelectorDiv{
@@ -1123,7 +1144,7 @@ li{
 }
 
 #finalizeBlock{
-  position: absolute;
+  position: sticky;
   bottom: 0;
   padding: 1em;
   display: flex;
@@ -1194,10 +1215,15 @@ li{
   opacity: 1;
   right: 0;
 }
-
-#sizeConfigBlock{
-  padding: 1em;
+.infoBlocks{
+  margin-left: 1em;
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+  color: white;
+  font-family: sans-serif;
+  padding-bottom: 1em;
 }
+
 #sizeChart{
   height: 2em;
   display: flex;
@@ -1218,4 +1244,45 @@ li{
 }
 .sizeOption:hover{
   border: 2px solid var(--buttonBgColor);
+}
+
+.sizeActive{
+  border: 2px solid #ffffff;
+}
+
+.sizeActive:hover{
+  border: 2px solid #ffffff;
+}
+
+#descriptionBlock{
+  padding: 1em;
+}
+#descBlock{
+  padding-right: 1.5em;
+  font-size: 1.1em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--variation-text);
+}
+.subDesc{
+  font-size: 0.6em;
+    font-family: serif;
+    margin-top: 1em;
+    color: var(--subtitleColor);
+}
+
+#mconfiguratorContainer::-webkit-scrollbar{
+  width: 10px;
+}
+
+#mconfiguratorContainer::-webkit-scrollbar-track{
+  border-radius:0.5em;
+}
+
+#mconfiguratorContainer::-webkit-scrollbar-thumb {
+  background: var(--thumbColor); 
+  border-radius:0.5em;
+}
+
+#mconfiguratorContainer::-webkit-scrollbar-thumb:hover {
+  background: var(--thumbColor); 
 }
