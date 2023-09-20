@@ -10963,7 +10963,7 @@ return parallaxUv;}
                 <div class="infoBlocks" v-if="isLoaded">
                     <div class="variationTitle">Description</div>
                     <div id="descBlock">
-                        <span class="descText">{{selectedModel.description}}
+                        <span class="descText">{{selectedModel.description}}</span>
                     </div>
                 </div>
                 <div id="finalizeBlock">
