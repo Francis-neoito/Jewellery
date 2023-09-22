@@ -7,7 +7,7 @@ body{
 .headerPanel{
   position: fixed;
   display: flex;
-  height: 5rem;
+  height: 7.5rem;
   width: 100vw;
   background-color: #f2e9e9;
   color: #832729;
@@ -19,33 +19,36 @@ body{
 }
 
 .searchbox{
-  position: absolute;
+  position: relative;
   display: flex;
-  left: 10em;
+  left: 1em;
+  right: 1em;
+  top: 1.5em;
   height: 2.5em;
   background-color: #ffffff;
   border-radius: 0.25rem;
-  width: 60%;
+  width: calc(100% - 2em);
   align-items: center;
 }
 .searchplaceholder{
-  margin-left: 2em;
+  margin-left: 1em;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.95em;
+  font-size: 0.8em;
   color: #9d9d9d;
+  overflow: hidden;
 }
 .logo{
   position: absolute;
-  top: 0.85rem;
-  left: 2rem;
+  top: 1rem;
+  left: 1rem;
   padding: 0;
   margin: 0;
   z-index: 10;
   cursor: pointer;
 }
 .logo img{
-  display: block;
-  height: 3rem;
+  display: inline-block;
+  height: 2rem;
   width: auto;
 }
 
@@ -65,7 +68,8 @@ z-index: 10;
 }
 
 #navright{
-  right: 1rem;
+  right: 0;
+  top: 1.5em;
 }
 
 .slider-ul{
@@ -78,6 +82,10 @@ z-index: 10;
   display: block;
   margin: 0 1rem;
   padding: 0;
+}
+
+.slider-li:nth-of-type(3){
+  display: none;
 }
   
 .sliderA {
@@ -96,11 +104,13 @@ z-index: 10;
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 0.9rem !important;
+  font-size: 0.7rem !important;
   font-weight: lighter;
   font-family: sans-serif;
 }
-
+.slider-li-menu:nth-of-type(2n){
+  display: none;
+}
 .sliderA span {
   position: relative;
 }
@@ -156,28 +166,29 @@ z-index: 10;
 }
 
 .menuNavBar{
+  position: absolute;
   display: flex;
   width: 100%;
   height: 4em;
   background-color: #ffffff;
-  margin-top: 5rem;
+  top: 7.45rem;
   align-items: center;
   justify-content: center;
 }
 
 .slider-li-menu{
-  padding: 0 2em;
+  padding: 0 0.2em;
   text-transform: uppercase;
 }
 
 .js-slider{
-  height: calc(95vh - 10rem);
+  height: calc(90vh - 10rem);
 }
 #sliderControl{
-width: calc(100% - 4em);
+width: calc(100%);
 position: absolute;
-top:calc(50vh);
-padding: 0 2em;
+top:calc(40vh);
+padding: 0 0.5em;
 }
 .sliderControlButton{
   height: 2.5em;
@@ -202,8 +213,8 @@ padding: 0 2em;
   top: calc(25vh);
   padding: 0 2em;
   z-index: 20;
-  height: 67vh;
-  right: 8em;
+  height: 40vh;
+  right: 3em;
   cursor: pointer;
 }
 
@@ -542,8 +553,8 @@ letter-spacing: 0.05em;
 }
 
 .categoryHeadBlock{
-  width: calc(100% - 10em);
-  padding: 1em 5em;
+  width: calc(100% - 2em);
+  padding: 1em 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -552,24 +563,24 @@ letter-spacing: 0.05em;
 
 .categoryHead{
   color: #832729;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: .0313rem;
-  font-size: 2.5rem;
+  font-size: 1.25rem;
   line-height: 1rem;
   height: 2em;
 }
 .categoryHeadSub{
   line-height: initial;
-  font-size: 1.125rem;
+  font-size: 0.8rem;
   margin-bottom: 0!important;
   font-weight: 400;
+  text-align: center;
 }
 
 .categoryBlock{
-  width: calc(100% - 10em);
-  padding: 1em 5em;
+  width: calc(100%);
+  padding: 1em 0em;
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   font-family: sans-serif;
 }
@@ -577,15 +588,15 @@ letter-spacing: 0.05em;
 .catagoryTable{
   table-layout: fixed ;
   border-collapse: collapse ;
-  width: 95%;
+  width: 98%;
   margin: auto;
 }
 .categoryGrid{
   justify-items: center;
-  padding-bottom: 1em;
+  padding-bottom: 0.8em;
 }
 .categoryItemBlock{
-  width: 85%;
+  width: 92%;
   margin: auto;
   border: 1px solid #4830314f;
   cursor: pointer;
@@ -602,25 +613,30 @@ letter-spacing: 0.05em;
   display: flex;
   width: 100%;
 }
+.categoryTitleText{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 0.8em;
+}
 .categoryTitleContainer{
   justify-content: center;
   display: flex;
   flex-direction: column;
-  font-size: 1.05rem;
-  line-height: 1.25rem;
-  color: #832729;
+  font-size: 0.9rem;
+  line-height: 0.9rem;
+  color: #cd2c2e;
   font-weight: 600;
   text-overflow: ellipsis;
   overflow: inherit;
   white-space: nowrap;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 0.5rem;
 }
 .exploreButton{
   text-align: center;
   padding: 0;
-  font-size: .875rem;
+  font-size: .7rem;
   font-weight: 200;
-  line-height: 1rem;
+  line-height: 0.75rem;
   color: #2b191a;
   opacity: 0.8;
   transition: 1s;
@@ -639,14 +655,11 @@ letter-spacing: 0.05em;
 .exploreButton:hover{
   color: #832729;
 }
-.categoryTitleText{
 
-}
 .exploreButtonBox{
   color: #000;
   border: 1px solid rgba(74, 35, 37, 0.7);
   width: calc(100% - 1em);
-  height: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -663,19 +676,20 @@ letter-spacing: 0.05em;
 }
 .collectionTitle{
   text-align:left;
-  margin-left:1em;
+  margin-left:0.5em;
   width:50%;
+  font-size: 0.85em;
+  overflow: hidden;
 }
 .footerBlock{
   background: #efe3e3 0% 0% no-repeat padding-box;
     padding-bottom: 1.25em;
-    height: 41.875rem;
     opacity: 1;
     padding-top: 4.875rem;
 }
 .footerContainer{
   display:flex; 
-  flex-direction:row;
+  flex-direction:column;
 }
 .gtm-footer-link{
   text-decoration: none;

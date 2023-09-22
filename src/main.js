@@ -1,4 +1,4 @@
-import './style.css';
+// import './style.css';
 import { initMainApp } from './components/controller';
 import { initWedRingMainApp } from './components/weddingringcontroller';
 
@@ -13,6 +13,8 @@ const initWeddingRingApp = function(){
 }
 
 function main(){
+    console.log(screen.width,screen.height);
+    console.log(window.innerWidth,window.innerHeight);
     const currentScript= document.getElementById('mainScript');
     if(currentScript == null){
         try {

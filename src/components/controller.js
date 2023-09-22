@@ -92,7 +92,7 @@ const initMainApp = function(){
         methods:{},
         template:`
         <footer class="footerBlock">
-        <div style="display:flex; flex-direction:row;">
+        <div class="footerContainer">
         <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Useful Links</h2>
             <ul id="collapsible-links" class="menu-footer content">
             <li><a class="gtm-footer-link" href="#" title="Delivery Information" >Delivery Information</a></li>
@@ -149,6 +149,11 @@ const initMainApp = function(){
         created(){
             this.categories = categories;
             this.collections = collection;
+            if(screen.width <= 500){
+                this.categoryColSize = 3;
+                this.collectionColSize = 1;
+                this.categories = this.categories.splice(0,this.categories.length-1);
+            }
         },
         mounted(){
             this.slider = new Slider();
@@ -175,7 +180,7 @@ const initMainApp = function(){
                 return Math.ceil(this.collections.length/this.collectionColSize);
             },
             getCollectionIndex(row,col){
-                return (row-1)*this.collectionColSize + (col);
+                return ((row-1)*this.collectionColSize + (col));
             },
             isCollectionCellAvailable(row,col){
                 if(this.getCollectionIndex(row,col) > this.collections.length)
@@ -217,7 +222,7 @@ const initMainApp = function(){
                         <div class="categoryItemBlock" v-if="isCellAvailable(row,col)" @click="openCategory(categories[getCategoryIndex(row,col)-1])">
                             <div class="categoryImgContainer"><img style="width:100%" :src="'./images/'+ categories[getCategoryIndex(row,col)-1].imgSrc"></div>
                             <div class="categoryTitleContainer">
-                                <h4 style="text-align:center">{{categories[getCategoryIndex(row,col)-1].name}}</h4>
+                                <h4 class="categoryTitleText" style="text-align:center">{{categories[getCategoryIndex(row,col)-1].name}}</h4>
                                 <span class="exploreButton">Explore <span class="hide">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> ></span>
                             </div>
                         </div>
@@ -235,9 +240,9 @@ const initMainApp = function(){
             <tr v-for="row in Number(getCollectionRowNum())" style="padding-bottom:1em">
                 <td class="categoryGrid" v-for="col in Number(collectionColSize)">
                     <div class="categoryItemBlock" style="width:95%" v-if="isCollectionCellAvailable(row,col)">
-                        <div class="categoryImgContainer"><img style="width:100%" :src="'./images/'+ collections[getCategoryIndex(row,col)-1].imgSrc"></div>
+                        <div class="categoryImgContainer"><img style="width:100%" :src="'./images/'+ collections[this.getCollectionIndex(row,col)-1].imgSrc"></div>
                         <div class="categoryTitleContainer" style="flex-direction: row;justify-content: flex-start; margin-bottom:0">
-                            <h3 style="text-align:left;margin-left:1em;width:50%;">{{collections[getCollectionIndex(row,col)-1].name}}</h3>
+                            <h3 class="collectionTitle">{{collections[this.getCollectionIndex(row,col)-1].name}}</h3>
                             <span class="exploreButton" style="float:right;justify-content: center; align-items: center;display:flex;">
                                 Explore &nbsp;<span class="hide">&nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;</span> ></span>
                         </div>

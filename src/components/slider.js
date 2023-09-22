@@ -29,7 +29,7 @@ class Slider {
         float screenRatio = screenSize.x / screenSize.y;
         float imageRatio = imageSize.x / imageSize.y;
         vec2 newSize = screenRatio < imageRatio 
-            ? vec2(imageSize.x * (screenSize.y / imageSize.y), screenSize.y)
+            ? vec2(imageSize.x * (screenSize.x / imageSize.x), imageSize.y * (screenSize.y / imageSize.y))
             : vec2(screenSize.x, imageSize.y * (screenSize.x / imageSize.x));
         vec2 newOffset = (screenRatio < imageRatio 
             ? vec2((newSize.x - screenSize.x) / 2.0, 0.0) 
