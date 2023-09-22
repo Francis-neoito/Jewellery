@@ -476,14 +476,20 @@ const initWedRingMainApp = function(){
         data(){
             return{
                 weddrings: [],
-                weddringColSize: 2,
+                weddringColSize: 4,
                 customizeMode: false,
             };
         },
         created(){
             this.weddrings = weddrings;
+            if(screen.width <= 500){
+                this.weddringColSize = 2;
+            }
         },
         mounted(){
+            if(screen.width <= 500){
+                this.weddringColSize = 2;
+            }
         },
         methods:{
             getWeddringRowNum(){
