@@ -658,6 +658,15 @@ letter-spacing: 0.05em;
   background-color: #832729;
   color: #fff;
 }
+.loadMoreButtonDiv{
+  width:88%;
+  height:4em;
+  margin:auto;
+  display:flex;
+  justify-content: center;
+  border-top: 1px solid #361a1a2e;
+  padding-top:2em;
+}
 .categoryTitleContainer:hover .exploreButton{
   color: #832729;
 }
@@ -701,7 +710,9 @@ li{
 #collapsible-links{
   padding-inline-start: 0px;
 }
-
+.weddingRingAreaHeadBlock{
+  position:absolute;top: 25vh;left: 4em;
+}
 #weddingRingAdArea{
   width: 100%;
   height: 80vh;
@@ -819,6 +830,10 @@ li{
   display: flex;
   align-items: center;
 }
+#bigCanvas{
+  height: 100%;
+  width: 100%;
+}
 #closeEditorDiv{
   position: fixed;
   top: calc(5rem + 2.5%);
@@ -894,6 +909,7 @@ li{
 #mconfiguratorBlock{
   overflow: hidden;
   position: absolute;
+  top: 2.5%;
   height: 95%;
   right: 1vw;
   width: 30vw;

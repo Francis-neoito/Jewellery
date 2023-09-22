@@ -98,7 +98,7 @@ const initWedRingMainApp = function(){
         methods:{},
         template:`
         <footer class="footerBlock">
-        <div style="display:flex; flex-direction:row;">
+        <div  class="footerContainer">
         <div style="margin-left:4em;width:20em"><h2 class="footerTitle">Useful Links</h2>
             <ul id="collapsible-links" class="menu-footer content">
             <li><a class="gtm-footer-link" href="#" title="Delivery Information" >Delivery Information</a></li>
@@ -157,11 +157,18 @@ const initWedRingMainApp = function(){
             }
             ringSelectorContainer.addEventListener('wheel',function(e) {
                 const race = 50;
-                if (e.deltaY > 0)
-                    ringSelectorContainer.scrollLeft += race;
-                else
-                    ringSelectorContainer.scrollLeft -= race;
-                    e.preventDefault();
+                if (e.deltaY > 0){
+                    if(screen.width<=500)
+                        ringSelectorContainer.scrollTop += race;
+                    else
+                        ringSelectorContainer.scrollLeft += race;
+                }else{
+                    if(screen.width<=500)
+                        ringSelectorContainer.scrollTop -= race;
+                    else
+                        ringSelectorContainer.scrollLeft -= race;
+                }
+                e.preventDefault();
             });
         },
         methods:{
@@ -188,6 +195,7 @@ const initWedRingMainApp = function(){
         props:['editMode'],
         data(){
             return{
+                bigCanvas:true,
                 isLoading: false,
                 isLoaded: false,
                 loadPercentage:0,
@@ -202,6 +210,9 @@ const initWedRingMainApp = function(){
             };
         },
         created(){
+            if(screen.width<=500){
+                this.bigCanvas = false;
+            }
             document.addEventListener('removethreeinstance',()=>{
             });
             this.ringCatalogs = baseRingModelData;
@@ -321,6 +332,10 @@ const initWedRingMainApp = function(){
                 this.controls = this.viewer.scene.activeCamera.controls;
                 this.controls.autoRotate = this.turnTable;
                 this.controls.autoRotateSpeed = 0.8;
+                if(!this.bigCanvas){
+                    this.controls.zoomOut(1);
+                    this.controls.zoomOut(1);
+                }
                 this.loadPercentage = 100;
             },
             toggleSceneMode(){
@@ -353,54 +368,107 @@ const initWedRingMainApp = function(){
                 <div id="loader"></div>
             </div>
             <ringModelSelector v-if="showBaseModelSelectMenu" :ringData=ringCatalogs @openBaseModel="(id)=>openBaseModelForEdit(id)"></ringModelSelector>
-            <canvas id="editorSceneBlock" height="100%" width="100%"></canvas>
-            <div v-if="isLoaded" id="sceneBackgroundControlDiv">
-                <img v-if="nightMode" class="sceneOptionButtons" src="./images/moon.svg" @click="toggleSceneMode()">
-                <img v-if="!nightMode" class="sceneOptionButtons" src="./images/daymode.svg" @click="toggleSceneMode()">
-                <svg v-if="turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
-                    <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
-                    <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
-                </svg>
-                <svg v-if="!turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
-                    <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
-                    <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
-                    <path d="M20 2 L2 20"/>
-                </svg>
-            </div>
-            <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorBlock">
-            </div>
-            <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorContainer">
-                <div id="modeTitleBlock" v-if="isLoaded">
-                    <span class="modelTitle">{{selectedModel.name}}</span>
-                    <div id="ringSettings" @click="openBaseModelSelectorMenu()" title="Change Base Model"><img style="height:100%;width:100%" src="./images/setting.svg"></div>
+            <div id="bigCanvas" v-if="bigCanvas">
+                <canvas id="editorSceneBlock" height="100%" width="100%"></canvas>
+                <div v-if="isLoaded" id="sceneBackgroundControlDiv">
+                    <img v-if="nightMode" class="sceneOptionButtons" src="./images/moon.svg" @click="toggleSceneMode()">
+                    <img v-if="!nightMode" class="sceneOptionButtons" src="./images/daymode.svg" @click="toggleSceneMode()">
+                    <svg v-if="turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
+                        <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
+                        <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
+                    </svg>
+                    <svg v-if="!turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
+                        <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
+                        <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
+                        <path d="M20 2 L2 20"/>
+                    </svg>
                 </div>
-                    <div class="priceEstimate" v-if="isLoaded" title="Proceed to preview for final price estimate">&#8377;{{selectedModel.basePrice}} <span>onwards</span>
-                    <div class="subDesc">Price may vary depending on the metal, gem, the final design selected. Click preview to see the final price breakup</div>
+                <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorBlock">
                 </div>
-                <div id="mconfigurator"></div>
-                <div class="infoBlocks" v-if="isLoaded">
-                    <div class="variationTitle">Size</div>
-                    <div id="sizeChart">
-                        <div class="sizeOption" :class="selectedSize == size? 'sizeActive' : ''" v-for="size in selectedModel.sizes" @click="selectSize(size)">{{size}}</div>
+                <div :style="{'width':isLoaded ? '30vw' : '0' }" id="mconfiguratorContainer">
+                    <div id="modeTitleBlock" v-if="isLoaded">
+                        <span class="modelTitle">{{selectedModel.name}}</span>
+                        <div id="ringSettings" @click="openBaseModelSelectorMenu()" title="Change Base Model"><img style="height:100%;width:100%" src="./images/setting.svg"></div>
                     </div>
-                    <div class="subDesc" style="font-size:1.25em;margin-top:2em;font-family: serif;">Weight will increase as per the Size. Check Sizing Comparison</div>
-                </div>
-                <div class="infoBlocks" v-if="isLoaded">
-                    <div class="variationTitle">Description</div>
-                    <div id="descBlock">
-                        <span class="descText">{{selectedModel.description}}</span>
+                        <div class="priceEstimate" v-if="isLoaded" title="Proceed to preview for final price estimate">&#8377;{{selectedModel.basePrice}} <span>onwards</span>
+                        <div class="subDesc">Price may vary depending on the metal, gem, the final design selected. Click preview to see the final price breakup</div>
+                    </div>
+                    <div id="mconfigurator"></div>
+                    <div class="infoBlocks" v-if="isLoaded">
+                        <div class="variationTitle">Size</div>
+                        <div id="sizeChart">
+                            <div class="sizeOption" :class="selectedSize == size? 'sizeActive' : ''" v-for="size in selectedModel.sizes" @click="selectSize(size)">{{size}}</div>
+                        </div>
+                        <div class="subDesc" style="font-size:1.25em;margin-top:2em;font-family: serif;">Weight will increase as per the Size. Check Sizing Comparison</div>
+                    </div>
+                    <div class="infoBlocks" v-if="isLoaded">
+                        <div class="variationTitle">Description</div>
+                        <div id="descBlock">
+                            <span class="descText">{{selectedModel.description}}</span>
+                        </div>
+                    </div>
+                    <div id="finalizeBlock">
+                        <div id="finalizeButtonContainer">
+                            <button id="backFinalize" @click="closeEditor()">Cancel</button>
+                            <button id="proceedFinalize"><span>Preview </span></button>
+                        </div>
                     </div>
                 </div>
-                <div id="finalizeBlock">
-                    <div id="finalizeButtonContainer">
-                        <button id="backFinalize" @click="closeEditor()">Cancel</button>
-                        <button id="proceedFinalize"><span>Preview </span></button>
-                    </div>
-                </div>
+                <div id="closeEditorDiv" @click="closeEditor()" title="Close Customizer">x</div>
             </div>
-            <div id="closeEditorDiv" @click="closeEditor()" title="Close Customizer">x</div>
+            <div id="smallCanvas" v-else>
+                <div style="position:relative">
+                    <canvas id="editorSceneBlock" height="70%" width="80%"></canvas>
+                    <div id="mconfigurator"></div>
+                </div>
+                <div v-if="isLoaded" id="sceneBackgroundControlDiv">
+                    <img v-if="nightMode" class="sceneOptionButtons" src="./images/moon.svg" @click="toggleSceneMode()">
+                    <img v-if="!nightMode" class="sceneOptionButtons" src="./images/daymode.svg" @click="toggleSceneMode()">
+                    <svg v-if="turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
+                        <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
+                        <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
+                    </svg>
+                    <svg v-if="!turnTable" class="sceneOptionButtons"  @click="toggleTurnTable()" viewBox="0 0 24 24" fill="none" :stroke="nightMode ? '#ffffff' : '#4d0316'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.70001 9.26001L12 12.33L17.26 9.28001"/><path d="M12 17.7701V12.3201"/>
+                        <path d="M10.76 6.28998L7.56 8.06998C6.84 8.46998 6.23999 9.47998 6.23999 10.31V13.7C6.23999 14.53 6.83 15.54 7.56 15.94L10.76 17.72C11.44 18.1 12.56 18.1 13.25 17.72L16.45 15.94C17.17 15.54 17.77 14.53 17.77 13.7V10.3C17.77 9.46998 17.18 8.45998 16.45 8.05998L13.25 6.27998C12.56 5.89998 11.44 5.89998 10.76 6.28998Z"/>
+                        <path d="M22 15C22 18.87 18.87 22 15 22L16.05 20.25"/><path d="M2 9C2 5.13 5.13 2 9 2L7.95001 3.75"/>
+                        <path d="M20 2 L2 20"/>
+                    </svg>
+                </div>
+                <div :style="{'display':isLoaded ? 'block' : 'none' }" id="mconfiguratorContainer">
+                    <div id="modeTitleBlock" v-if="isLoaded">
+                        <span class="modelTitle">{{selectedModel.name}}</span>
+                        <div id="ringSettings" @click="openBaseModelSelectorMenu()" title="Change Base Model"><img style="height:100%;width:100%" src="./images/setting.svg"></div>
+                    </div>
+                        <div class="priceEstimate" v-if="isLoaded" title="Proceed to preview for final price estimate">&#8377;{{selectedModel.basePrice}} <span>onwards</span>
+                        <div class="subDesc">**Price may vary depending on the metal, gem, the final design selected. Click preview to see the final price breakup</div>
+                    </div>
+                    
+                    <div class="infoBlocks" v-if="isLoaded">
+                        <div class="variationTitle">Size</div>
+                        <div id="sizeChart">
+                            <div class="sizeOption" :class="selectedSize == size? 'sizeActive' : ''" v-for="size in selectedModel.sizes" @click="selectSize(size)">{{size}}</div>
+                        </div>
+                        <div class="subDesc" style="font-size:1.2em;margin-top:1em;font-family: serif;">**Weight will increase as per the Size. Check Sizing Comparison</div>
+                    </div>
+                    <div class="infoBlocks" v-if="isLoaded">
+                        <div class="variationTitle">Description</div>
+                        <div id="descBlock">
+                            <span class="descText">{{selectedModel.description}}</span>
+                        </div>
+                    </div>
+                    <div id="finalizeBlock">
+                        <div id="finalizeButtonContainer">
+                            <button id="backFinalize" @click="closeEditor()">Cancel</button>
+                            <button id="proceedFinalize"><span>Preview </span></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="closeEditorDiv" @click="closeEditor()" title="Close Customizer">x</div>
+            </div>
     `});
 
     app.component('wedapp',{
@@ -408,7 +476,7 @@ const initWedRingMainApp = function(){
         data(){
             return{
                 weddrings: [],
-                weddringColSize: 4,
+                weddringColSize: 2,
                 customizeMode: false,
             };
         },
@@ -435,9 +503,15 @@ const initWedRingMainApp = function(){
                 this.customizeMode = true;
                 const editorContainer = document.getElementById('customizeEditorContainer');
                 if(editorContainer!=null){
-                    editorContainer.style.top= '5rem';
-                    editorContainer.style.left= '0';
-                    editorContainer.style.height = 'calc(100vh - 5rem)';
+                    if(screen.width <= 500){
+                        editorContainer.style.top= '7.5rem';
+                        editorContainer.style.left= '0';
+                        editorContainer.style.height = 'calc(100vh - 7.5rem)';
+                    }else{
+                        editorContainer.style.top= '5rem';
+                        editorContainer.style.left= '0';
+                        editorContainer.style.height = 'calc(100vh - 5rem)';
+                    }
                     editorContainer.style.width = '100vw';
                     editorContainer.style.opacity = '1';
                     document.getElementsByTagName('body')[0].style.overflow = 'hidden';
@@ -467,7 +541,7 @@ const initWedRingMainApp = function(){
             <editorscene :editMode="customizeMode" v-if="customizeMode" @closeEditorEvent="closeCustomizEditor()"></editorscene>
         </div>
         <div id="weddingRingAdArea">
-            <div style="position:absolute;top: 25vh;left: 4em;">
+            <div class="weddingRingAreaHeadBlock">
             <h1 id="weddHead">Your loved ones are <span id="weddHeadUnique">Unique</span></h1>
             <h3 id="weddSubHead">so should be their, Rings.</h3>
             <p id="weddsub">Customize your uniqe ring with realistic graphics and pure beauty of the collection.</p>
@@ -499,7 +573,7 @@ const initWedRingMainApp = function(){
                 </tr>
             </table>
         </div>
-        <div style="width:88%;height:4em;margin:auto;display:flex;justify-content: center;border-top: 1px solid #361a1a2e; padding-top:2em">
+        <div class="loadMoreButtonDiv">
             <div style="width:10em" class="exploreButtonBox">Load More</div>
         </div>
         <div class="categoryHeadBlock">

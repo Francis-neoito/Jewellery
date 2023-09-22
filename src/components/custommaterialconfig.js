@@ -30,59 +30,115 @@ class CustomMaterialConfigPlugin extends MaterialConfiguratorBasePlugin {
       const configuratorDiv = document.getElementById("mconfigurator");
   
       configuratorDiv.innerHTML = "";
-  
-      for (const variation of this.variations) {
-        const container = document.createElement("div");
-        container.classList.add("variations");
-        container.innerHTML = "<span class=\"variationTitle\"> "+ variation.title;
-        configuratorDiv.appendChild(container);
-        const varTile = document.createElement("div");
-        varTile.classList.add("variationTile");
-        container.appendChild(varTile);
-        variation.materials.map((material) => {
-          // material is the variation that can be applied to an object
-          let image;
-          if (!variation.preview.startsWith("generate:")) {
-            const pp = material[variation.preview] || "#ff00ff";
-            image = pp.image || pp;
-            image = pp.image ? imageBitmapToBase64(pp.image, 100) : undefined
-            if (!image) image = makeColorSvgCircle(pp)
-          } else {
-            // Generate a small snapshot of the material preview based on some shape (optional)
-            const matColor = material.color;
-            if(material.isDiamondMaterial){
-              image = this.makeDiamondSvg(matColor);
-            }else{
-              image = makeColorSvgCircle(matColor.getHexString());
+      if(screen.width>500){
+        for (const variation of this.variations) {
+          const container = document.createElement("div");
+          container.classList.add("variations");
+          container.innerHTML = "<span class=\"variationTitle\"> "+ variation.title;
+          configuratorDiv.appendChild(container);
+          const varTile = document.createElement("div");
+          varTile.classList.add("variationTile");
+          container.appendChild(varTile);
+          variation.materials.map((material) => {
+            // material is the variation that can be applied to an object
+            let image;
+            if (!variation.preview.startsWith("generate:")) {
+              const pp = material[variation.preview] || "#ff00ff";
+              image = pp.image || pp;
+              image = pp.image ? imageBitmapToBase64(pp.image, 100) : undefined
+              if (!image) image = makeColorSvgCircle(pp)
+            } else {
+              // Generate a small snapshot of the material preview based on some shape (optional)
+              const matColor = material.color;
+              if(material.isDiamondMaterial){
+                image = this.makeDiamondSvg(matColor);
+              }else{
+                image = makeColorSvgCircle(matColor.getHexString());
+              }
+              
+              // image = this._previewGenerator.generate(
+              //   material,
+              //   variation.preview.split(":")[1]
+              // );
             }
-            
-            // image = this._previewGenerator.generate(
-            //   material,
-            //   variation.preview.split(":")[1]
-            // );
-          }
-          // callback to change the material variations
-          const onClick = () => {
-            this.propagateMatChange(variation, variation.title+material.uuid);
-            this.applyVariation(variation, material.uuid);
-          };
-          // Generate a UI from this data.
-          // console.log({
-          //   uid: material.uuid,
-          //   color: material.color,
-          //   material: material,
-          //   image,
-          //   onClick
-          // });
-          const selectorDiv = document.createElement("div");
-          selectorDiv.classList.add("variationSelector");
-          selectorDiv.innerHTML = '<img class="variationImage" id="'+variation.title+material.uuid+'" src="' + image + '" title="'+ material.name + '"/>';
-          selectorDiv.onclick = onClick;
-          varTile.append(selectorDiv);
-        });
-        this.propagateMatChange(variation, variation.title+variation.materials[0].uuid);
-        this.applyVariation(variation, variation.materials[0].uuid);
+            // callback to change the material variations
+            const onClick = () => {
+              this.propagateMatChange(variation, variation.title+material.uuid);
+              this.applyVariation(variation, material.uuid);
+            };
+            // Generate a UI from this data.
+            // console.log({
+            //   uid: material.uuid,
+            //   color: material.color,
+            //   material: material,
+            //   image,
+            //   onClick
+            // });
+            const selectorDiv = document.createElement("div");
+            selectorDiv.classList.add("variationSelector");
+            selectorDiv.innerHTML = '<img class="variationImage" id="'+variation.title+material.uuid+'" src="' + image + '" title="'+ material.name + '"/>';
+            selectorDiv.onclick = onClick;
+            varTile.append(selectorDiv);
+          });
+          this.propagateMatChange(variation, variation.title+variation.materials[0].uuid);
+          this.applyVariation(variation, variation.materials[0].uuid);
+        }
+      }else{
+        for (const variation of this.variations) {
+          const container = document.createElement("div");
+          container.classList.add("variations");
+          // container.innerHTML = "<span class=\"variationTitle\"> "+ variation.title;
+          configuratorDiv.appendChild(container);
+          const varTile = document.createElement("div");
+          varTile.classList.add("variationTile");
+          container.appendChild(varTile);
+          variation.materials.map((material) => {
+            // material is the variation that can be applied to an object
+            let image;
+            if (!variation.preview.startsWith("generate:")) {
+              const pp = material[variation.preview] || "#ff00ff";
+              image = pp.image || pp;
+              image = pp.image ? imageBitmapToBase64(pp.image, 100) : undefined
+              if (!image) image = makeColorSvgCircle(pp)
+            } else {
+              // Generate a small snapshot of the material preview based on some shape (optional)
+              const matColor = material.color;
+              if(material.isDiamondMaterial){
+                image = this.makeDiamondSvg(matColor);
+              }else{
+                image = makeColorSvgCircle(matColor.getHexString());
+              }
+              
+              // image = this._previewGenerator.generate(
+              //   material,
+              //   variation.preview.split(":")[1]
+              // );
+            }
+            // callback to change the material variations
+            const onClick = () => {
+              this.propagateMatChange(variation, variation.title+material.uuid);
+              this.applyVariation(variation, material.uuid);
+            };
+            // Generate a UI from this data.
+            // console.log({
+            //   uid: material.uuid,
+            //   color: material.color,
+            //   material: material,
+            //   image,
+            //   onClick
+            // });
+            const selectorDiv = document.createElement("div");
+            selectorDiv.classList.add("variationSelector");
+            selectorDiv.innerHTML = '<img class="variationImage" id="'+variation.title+material.uuid+'" src="' + image + '" title="'+ material.name + '"/>';
+            selectorDiv.onclick = onClick;
+            varTile.append(selectorDiv);
+          });
+          this.propagateMatChange(variation, variation.title+variation.materials[0].uuid);
+          this.applyVariation(variation, variation.materials[0].uuid);
+        }
+
       }
+
       return true;
     }
   }
