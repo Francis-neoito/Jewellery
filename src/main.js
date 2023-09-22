@@ -13,6 +13,7 @@ const initWeddingRingApp = function(){
 }
 
 function main(){
+    console.log(screen.width,screen.height);
     const currentScript= document.getElementById('mainScript');
     if(currentScript == null){
         try {
