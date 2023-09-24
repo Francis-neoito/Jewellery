@@ -301,6 +301,7 @@ const initWedRingMainApp = function(){
                   }) ;
                 const manager = new WEBGI.AssetManagerPlugin();
                 await this.viewer.addPlugin(manager);
+                this.viewer.renderer.displayCanvasScaling = Math.min(window.devicePixelRatio, 2);
                /* await this.viewer.addPlugin(WEBGI.TonemapPlugin);
                 const pp =await this.viewer.addPlugin(WEBGI.ProgressivePlugin);;
                 await this.viewer.addPlugin(WEBGI.SSRPlugin);
