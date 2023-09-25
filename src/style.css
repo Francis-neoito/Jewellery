@@ -4,6 +4,20 @@ html{
 body{
   margin: 0;
 }
+#landscapeStopperDiv{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background-image: radial-gradient(rgb(251, 193, 201) 50%,rgb(231, 153, 164));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: sans-serif;
+}
 .headerPanel{
   position: fixed;
   display: flex;
@@ -1188,6 +1202,7 @@ li{
   line-height: 1.5em;
   width: 30%;
   background-color: white;
+  color: var(--text-color);
   border-radius: 0.25rem;
   cursor: pointer;
   text-decoration: none;
