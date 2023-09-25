@@ -61,7 +61,13 @@ function main(){
         }
         catch(err) {
         console.log(err);
-        }    
+        } 
+        try {
+            initCustomizerApp();
+        }
+        catch(err) {
+        console.log(err);
+        } 
     }else{
         if(currentScript.getAttribute('page') === 'mainapp'){
             initHome();
