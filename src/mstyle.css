@@ -850,7 +850,37 @@ li{
     --subtitleColor: #2a2a2adb;
     --thumbColor: #6d6d6d15;
   }
+.customizerAppBackground{
+  background-image: var(--bg-image);
+}
 
+.customizerAppBackground{
+  background-image: var(--bg-image);
+}
+.customizerIntroHead{
+  position: absolute;
+  width: 95%;
+  z-index: 150;
+  bottom: 0.5em;
+  left: 2.5%;
+  font-size: 12px;
+  color: var(--text-color);
+  font-family: 'Roboto';
+  font-weight: lighter;
+  opacity: 0.8;
+  text-align: justify;
+}
+.customizerIntroPanel{
+  position: absolute;
+  z-index: 150;
+  color: var(--variation-text);
+  font-size: 1.1em;
+  font-family: 'Playball';
+  top: 1em;
+  width: 100%;
+  text-align: center;
+  font-weight: lighter;
+}
 #customizeEditorContainer{
   position: fixed;
   top: 40vh;
@@ -908,16 +938,17 @@ li{
   transition: 1s;
   z-index: 150;
 }
-
+#editorSceneBlockCustomizer{
+  position: relative;
+  height: 65vh;
+  width: 100%;
+}
 #editorSceneBlock{
   position: relative;
   height: 65vh;
   width: 100%;
 }
 
-#editorSceneBlock{
-
-}
 
 #smallCanvas{
   height: 100%;
@@ -1066,7 +1097,16 @@ li{
 .variationImageActive:hover{
   border: 3px solid #ffffff;
 }
-
+#ringSelectorDivCustomizer{
+  position: absolute;
+  height: 80%;
+  width: 70%;
+  bottom: 8%;
+  left: 15%;
+  z-index: 120;
+  display: flex;
+  justify-content: center;
+}
 #ringSelectorDiv{
   position: absolute;
   height: 95%;

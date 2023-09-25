@@ -1,6 +1,7 @@
 // import './style.css';
 import { initMainApp } from './components/controller';
 import { initWedRingMainApp } from './components/weddingringcontroller';
+import {initCustomizerMainApp} from './components/customizercontroller'
 
 const initHome = function(){
     const app = initMainApp();
@@ -10,6 +11,10 @@ const initHome = function(){
 const initWeddingRingApp = function(){
     const app = initWedRingMainApp();
     app.mount('#weddingApp');
+}
+const initCustomizerApp = function(){
+    const app = initCustomizerMainApp();
+    app.mount('#customiserapp');
 }
 
 function displayLandscapeWarning(){
@@ -62,6 +67,8 @@ function main(){
             initHome();
         }else if(currentScript.getAttribute('page') === 'weddingrings'){
             initWeddingRingApp();
+        }else if(currentScript.getAttribute('page') === 'customizerapp'){
+            initCustomizerApp();
         }
     }
 }

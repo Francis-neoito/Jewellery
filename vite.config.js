@@ -11,7 +11,13 @@ export default defineConfig({
       input: {
         main: './index.html',
         collection: './weddingrings.html',
+        customizer: './customizer.html',
       }
+    }
+  },
+  server:{
+    proxy:{
+
     }
   }
 })
