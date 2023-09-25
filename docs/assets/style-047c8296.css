@@ -4,10 +4,24 @@ html{
 body{
   margin: 0;
 }
+#landscapeStopperDiv{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background-image: radial-gradient(rgb(251, 193, 201) 50%,rgb(231, 153, 164));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: sans-serif;
+}
 .headerPanel{
   position: fixed;
   display: flex;
-  height: 7.5rem;
+  height: 5rem;
   width: 100vw;
   background-color: #f2e9e9;
   color: #832729;
@@ -19,36 +33,33 @@ body{
 }
 
 .searchbox{
-  position: relative;
+  position: absolute;
   display: flex;
-  left: 1em;
-  right: 1em;
-  top: 1.5em;
+  left: 10em;
   height: 2.5em;
   background-color: #ffffff;
   border-radius: 0.25rem;
-  width: calc(100% - 2em);
+  width: 60%;
   align-items: center;
 }
 .searchplaceholder{
-  margin-left: 1em;
+  margin-left: 2em;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.8em;
+  font-size: 0.95em;
   color: #9d9d9d;
-  overflow: hidden;
 }
 .logo{
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 0.85rem;
+  left: 2rem;
   padding: 0;
   margin: 0;
   z-index: 10;
   cursor: pointer;
 }
 .logo img{
-  display: inline-block;
-  height: 2rem;
+  display: block;
+  height: 3rem;
   width: auto;
 }
 
@@ -68,8 +79,7 @@ z-index: 10;
 }
 
 #navright{
-  right: 0;
-  top: 1.5em;
+  right: 1rem;
 }
 
 .slider-ul{
@@ -82,10 +92,6 @@ z-index: 10;
   display: block;
   margin: 0 1rem;
   padding: 0;
-}
-
-.slider-li:nth-of-type(3){
-  display: none;
 }
   
 .sliderA {
@@ -104,13 +110,11 @@ z-index: 10;
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 0.7rem !important;
+  font-size: 0.9rem !important;
   font-weight: lighter;
   font-family: sans-serif;
 }
-.slider-li-menu:nth-of-type(2n){
-  display: none;
-}
+
 .sliderA span {
   position: relative;
 }
@@ -166,29 +170,28 @@ z-index: 10;
 }
 
 .menuNavBar{
-  position: absolute;
   display: flex;
   width: 100%;
   height: 4em;
   background-color: #ffffff;
-  top: 7.45rem;
+  margin-top: 5rem;
   align-items: center;
   justify-content: center;
 }
 
 .slider-li-menu{
-  padding: 0 0.2em;
+  padding: 0 2em;
   text-transform: uppercase;
 }
 
 .js-slider{
-  height: calc(90vh - 10rem);
+  height: calc(95vh - 10rem);
 }
 #sliderControl{
-width: calc(100%);
+width: calc(100% - 4em);
 position: absolute;
-top:calc(40vh);
-padding: 0 0.5em;
+top:calc(50vh);
+padding: 0 2em;
 }
 .sliderControlButton{
   height: 2.5em;
@@ -213,8 +216,8 @@ padding: 0 0.5em;
   top: calc(25vh);
   padding: 0 2em;
   z-index: 20;
-  height: 40vh;
-  right: 3em;
+  height: 67vh;
+  right: 8em;
   cursor: pointer;
 }
 
@@ -553,8 +556,8 @@ letter-spacing: 0.05em;
 }
 
 .categoryHeadBlock{
-  width: calc(100% - 2em);
-  padding: 0.5em 1em;
+  width: calc(100% - 10em);
+  padding: 1em 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -563,24 +566,24 @@ letter-spacing: 0.05em;
 
 .categoryHead{
   color: #832729;
-  font-weight: 500;
-  letter-spacing: .0513rem;
-  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: .0313rem;
+  font-size: 2.5rem;
   line-height: 1rem;
   height: 2em;
 }
 .categoryHeadSub{
   line-height: initial;
-  font-size: 0.75rem;
+  font-size: 1.125rem;
   margin-bottom: 0!important;
   font-weight: 400;
-  text-align: center;
 }
 
 .categoryBlock{
-  width: calc(100%);
-  padding: 0.2em 0em;
+  width: calc(100% - 10em);
+  padding: 1em 5em;
   display: flex;
+  /* flex-direction: column; */
   align-items: center;
   font-family: sans-serif;
 }
@@ -588,15 +591,15 @@ letter-spacing: 0.05em;
 .catagoryTable{
   table-layout: fixed ;
   border-collapse: collapse ;
-  width: 98%;
+  width: 95%;
   margin: auto;
 }
 .categoryGrid{
   justify-items: center;
-  padding-bottom: 0.8em;
+  padding-bottom: 1em;
 }
 .categoryItemBlock{
-  width: 92%;
+  width: 85%;
   margin: auto;
   border: 1px solid #4830314f;
   cursor: pointer;
@@ -613,30 +616,25 @@ letter-spacing: 0.05em;
   display: flex;
   width: 100%;
 }
-.categoryTitleText{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 0.8em;
-}
 .categoryTitleContainer{
   justify-content: center;
   display: flex;
   flex-direction: column;
-  font-size: 0.9rem;
-  line-height: 0.9rem;
-  color: #cd2c2e;
+  font-size: 1.05rem;
+  line-height: 1.25rem;
+  color: #832729;
   font-weight: 600;
   text-overflow: ellipsis;
   overflow: inherit;
   white-space: nowrap;
-  margin: 0 auto 0.5rem;
+  margin: 0 auto 1.5rem;
 }
 .exploreButton{
   text-align: center;
   padding: 0;
-  font-size: .7rem;
+  font-size: .875rem;
   font-weight: 200;
-  line-height: 0.75rem;
+  line-height: 1rem;
   color: #2b191a;
   opacity: 0.8;
   transition: 1s;
@@ -655,11 +653,14 @@ letter-spacing: 0.05em;
 .exploreButton:hover{
   color: #832729;
 }
+.categoryTitleText{
 
+}
 .exploreButtonBox{
   color: #000;
   border: 1px solid rgba(74, 35, 37, 0.7);
   width: calc(100% - 1em);
+  height: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -672,34 +673,32 @@ letter-spacing: 0.05em;
   color: #fff;
 }
 .loadMoreButtonDiv{
-  width:50%;
-  height:2em;
+  width:88%;
+  height:4em;
   margin:auto;
   display:flex;
   justify-content: center;
   border-top: 1px solid #361a1a2e;
-  padding-top:1.5em;
+  padding-top:2em;
 }
 .categoryTitleContainer:hover .exploreButton{
   color: #832729;
 }
 .collectionTitle{
   text-align:left;
-  margin-left:0.5em;
+  margin-left:1em;
   width:50%;
-  font-size: 0.85em;
-  overflow: hidden;
 }
 .footerBlock{
   background: #efe3e3 0% 0% no-repeat padding-box;
     padding-bottom: 1.25em;
-
+    height: 41.875rem;
     opacity: 1;
     padding-top: 4.875rem;
 }
 .footerContainer{
   display:flex; 
-  flex-direction:column;
+  flex-direction:row;
 }
 .gtm-footer-link{
   text-decoration: none;
@@ -725,61 +724,52 @@ li{
 #collapsible-links{
   padding-inline-start: 0px;
 }
-
+.weddingRingAreaHeadBlock{
+  position:absolute;top: 25vh;left: 4em;
+}
 #weddingRingAdArea{
   width: 100%;
-  height: 95vh;
+  height: 80vh;
   background-color: #171717;
-  background-image: url('/Jewellery/images/weddingringad2small.png');
+  background-image: url('/Jewellery/images/weddingringad2.png');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position:90%;
-}
-.weddingRingAreaHeadBlock{
-  position:absolute;
-  top: calc(11.5rem);
-  padding-left: 1em;
-  width: calc(100% - 1em);
-  height: calc(95vh - 11.5rem);
 }
 #weddHead{
   color: #fafafa;
-  font-size: 2.5em;
+  font-size: 4.5em;
   font-weight: 200;
-  margin-top: 1em;
+  /* font-style: italic; */
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
   font-family: 'Playball';
   margin-bottom: 0;
 }
 #weddHeadUnique{
   color: #0079ff;
-  font-size: 1.2em;
   padding-right: 0.1em;
   background: linear-gradient(to bottom, #4e3b1b 15%, #937d4c 20%, #cfc09f 30%,#ffecb3 40%,#523d13 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 #weddSubHead{
-  margin-top: 0.5em;
+  margin-top: 0;
   color: #fafafa;
-  font-size: 1.4em;
+  font-size: 2em;
   font-weight: lighter;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
   font-family: 'Playball';
+
 }
 #weddsub{
-  position: absolute;
-  bottom: 9em;
-  right: 2em;
-  color: #cdcdcd;
-  font-size: small;
-  text-align: right;
-  line-height:1.5em;
+  color: #d0d0d0;
+  margin-top: 7em;
+  font-size: medium;
+  line-height: 1.5em;
   font-family: Arial, Helvetica, sans-serif;
-  width: 80vw;
+  width: 28vw;
 }
 #customizeButton{
-  position: absolute;
-  bottom: 1.8em;
-  right: 1.5em;
+  margin-top: 2em;
   width: 14em;
   height: 4em;
   border: 2px solid rgb(147, 147, 147);
@@ -828,12 +818,12 @@ li{
   }
   :root.night{
     --bg-image:radial-gradient(rgb(39, 39, 39),rgb(11, 11, 11));
-    --text-color:#0c0c0c;
+    --text-color:#ffffff;
     --variation-text: #bebebe;
     --ringSettings:#505050;
     --ringSettingsHover:#686868;
     --buttonBgColor: #0f0f0f;
-    --subtitleColor: #2a2a2adb;
+    --subtitleColor: #d2d2d2db;
     --thumbColor: #6d6d6d15;
   }
 
@@ -854,11 +844,15 @@ li{
   display: flex;
   align-items: center;
 }
+#bigCanvas{
+  height: 100%;
+  width: 100%;
+}
 #closeEditorDiv{
   position: fixed;
-  top: calc(8rem);
-  right: 3vw;
-  font-size: 1.5em;
+  top: calc(5rem + 2.5%);
+  right: 2vw;
+  font-size: 1.4em;
   font-weight: bold;
   color: var(--text-color);
   font-family: sans-serif;
@@ -897,21 +891,13 @@ li{
 
 #editorSceneBlock{
   position: relative;
-  height: 65vh;
+  height: calc(100vh - 3em);
   width: 100%;
+  margin-left: -20%;
 }
 
 #editorSceneBlock{
 
-}
-
-#smallCanvas{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y:auto;
-  overflow-x: hidden;
 }
 
 #sceneBackgroundControlDiv{
@@ -922,10 +908,10 @@ li{
 }
 
 .sceneOptionButtons{
-  height: 1.8em;
-  width: 1.8em;
-  margin-left: 1em;
-  margin-top: 1em;
+  height: 2em;
+  width: 2em;
+  margin-left: 2em;
+  margin-top: 2em;
   opacity: 0.3;
   cursor: pointer;
   transition: 0.5s;
@@ -936,10 +922,11 @@ li{
 
 #mconfiguratorBlock{
   overflow: hidden;
-  display: none;
-  /* position: absolute; */
-  /* right: 1vw; */
-  width: 100%;
+  position: absolute;
+  top: 2.5%;
+  height: 95%;
+  right: 1vw;
+  width: 30vw;
   /* background-color: rgb(195, 195, 195); */
   border-radius: 0.45rem;
   z-index: 100;
@@ -947,37 +934,60 @@ li{
   box-shadow:0 2px 4px rgba(32, 1, 7, 0.1), 0 2px 14px rgba(32, 1, 7, 0.2);
   opacity: 1;
   transition: 0.4s ease-in;
+
+}
+
+#mconfiguratorBlock:before{
+  content: "";
+  position: absolute;
+  height: calc(100% + 50px);
+  top: -25px;
+  right: 2vw;
+  left: -25px;
+  bottom:0;
+  width: calc(30vw + 50px);
+  background-image: inherit;
+  /* z-index: 100; */
+  /* border-radius: 0.25rem; */
+  filter: blur(3px);
+  box-shadow: inset 0 0 0 3000px rgba(255,255,255,0.3);
+  opacity: .6;
+  
 }
 
 #mconfiguratorContainer{
-  display: none;
-  background-color: rgba(255, 255, 255, 0.879);
-  width: 100%;
+  /* overflow: hidden; */
+  position: absolute;
+  height: 95%;
+  top: 2.5vh;
+  right: 1vw;
+  width: 30vw;
+  border-radius: 0.45rem;
   z-index: 100;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: 0.4s ease-in;
 }
 
 #mconfigurator{
-  position: absolute;
-  bottom: 0.1em;
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
+  /* width: 100%;
+  height: 100%; */
 }
 #modeTitleBlock{
   border-bottom: 1px solid #ffffff96;
-  margin: 0.2em 0.8em;
+  margin: 0.5em 1em;
   font-family: sans-serif;
-  color: rgb(26, 26, 26);
+  color: rgb(242, 245, 248);
 }
 .modelTitle{
-  font-size: 1.4em;
+  font-size: 1.75em;
   font-weight: 600;
-  line-height: 2.4em;
+  line-height: 2.5em;
   width: 100%;
 }
 .priceEstimate{
-  padding: 0em 0.4em;
-  font-size: 1.6em;
+  padding: 0em 0.5em;
+  font-size: 2em;
   color: var(--text-color);
   margin-bottom: 15px;
 }
@@ -985,11 +995,10 @@ li{
   font-size: 0.7em;
 }
 #ringSettings{
-  height: 1.5em;
-  width: 1.5em;
-  float: right;
-  margin-right: 0.4em;
-  margin-top: 0.5em;
+  height: 1.2em;
+  width: 1.2em;
+  display: inline-block;
+  margin-left: 1em;
   border: 1px solid #727272;
   padding: 0.2em;
   border-radius: 0.25rem;
@@ -1001,6 +1010,9 @@ li{
   border: 1px solid #888888;
 }
 .variations{
+  margin-left: 1em;
+  margin-top: 1em;
+  margin-bottom: 2em;
   color: white;
   font-family: sans-serif;
 }
@@ -1009,16 +1021,16 @@ li{
   display: block;
   margin-bottom: 0.5em;
   font-size: 1.2em;
-  font-weight: bold;
   color: var(--variation-text);
-  border-bottom: 1px solid #ffffff00;
+  border-bottom: 1px solid #ffffff4d;
   padding-bottom: 0.3em;
   width: 95%;
 }
 
 .variationTile{
-  background: #f5fcff00;
-  padding: 0.2em;
+  background: #f5fcff42;
+  width: calc(95% - 2em);
+  padding: 1em 1em;
   border-radius: 0.45rem;
   display: flex;
   white-space: break-spaces;
@@ -1037,17 +1049,15 @@ li{
   padding: 0.2em;
   box-shadow: 0 0 0.5em 0.1em #0000003b;
   border-radius: 0.5em;
-  border: 1px solid #b1b1b1;
+  border: 1px solid #aeaeae;
   cursor: pointer;
   transition: 0.5s;
-  opacity: 0.7;
 }
 .variationImage:hover{
   border: 5px solid #0c74fc92;
 }
 .variationImageActive{
   border: 3px solid #ffffff;
-  opacity: 0.9;
 }
 .variationImageActive:hover{
   border: 3px solid #ffffff;
@@ -1055,11 +1065,12 @@ li{
 
 #ringSelectorDiv{
   position: absolute;
-  height: 95%;
-  width: calc(100% - 6em);
-  top: 1em;
-  left: 3em;
-  right: 3em;
+  height: 43vh;
+  min-height: 200px;
+  min-width: 700px;
+  width: 70vw;
+  left: 15vw;
+  top: 30vh;
   z-index: 120;
   display: flex;
   justify-content: center;
@@ -1069,7 +1080,7 @@ li{
   color:rgb(207, 207, 207);
   height:1.5em;
   font-size:0.8em;
-  top: 0;
+  bottom: 0;
   width: 10em;
   background-color: #616161;
   font-family: sans-serif;
@@ -1082,11 +1093,12 @@ li{
 #ringSelectorBlock{
   position: absolute;
   overflow: hidden;
-  height: calc(100% - 2.2em);
-  width: calc(100% - 1em);
-  left: 0.5em;
-  right: 0.5em;
-  top: 2.2em;
+  height: 38vh;
+  min-height: 200px;
+  min-width: 700px;
+  width: 72vw;
+  /* left: 15vw; */
+  /* top: 30vh; */
   border-radius: 0.45rem;
   display: flex;
   align-items: center;
@@ -1101,12 +1113,12 @@ li{
 #ringSelectorBlock:before{
   content: "";
   position: absolute;
-  height: calc(100% - 2.2em + 50px);
-  top: -8px;
+  height: calc(38vh + 50px);
+  top: -25px;
   right: 2vw;
-  left: -8px;
+  left: -25px;
   bottom:0;
-  width: calc(100vw - 1em + 50px);
+  width: calc(72vw + 50px);
   background-image: inherit;
   filter: blur(3px);
   box-shadow: inset 0 0 0 3000px rgba(255,255,255,0.3);
@@ -1114,19 +1126,21 @@ li{
 }
 
 #ringSelectorContainer{
-  height:94%;
-  width:98%;
+  height:calc(93% - 0.5em);
+  width:97%;
   border-radius:0.35em;
   z-index:150;
   display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
   padding-bottom: 0.5em;
+  /* scrollbar-width: none;  */
+  /* -ms-overflow-style: none; */
 }
 
 #ringSelectorContainer::-webkit-scrollbar{
-  width: 0.7em;
+  height: 0.7em;
   opacity: 0.2;
 }
 
@@ -1149,12 +1163,11 @@ li{
 .ringCatalogContainer{
   flex: 0 0 auto;
   z-index: 150;
-  height: 30vh;
-  width: 98%;
+  height: calc(100% - 6px);
+  width: 17em;
   border-radius: 0.35em;
-  margin-bottom: 0.5em;
+  margin-right: 1em;
   border: 5px solid  rgba(27, 27, 27, 0);
-  box-shadow: 0 0 1px 5px rgba(50, 50, 50, 0.028);
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
@@ -1174,8 +1187,9 @@ li{
 #finalizeBlock{
   position: sticky;
   bottom: 0;
+  padding: 1em;
   display: flex;
-  width: 100%;
+  width: 93%;
 }
 
 #finalizeButtonContainer{
@@ -1183,30 +1197,32 @@ li{
   width: 100%;
 }
 #backFinalize{
-  display: inline-block;
   height: 2.5em;
   font-size: 1.2em;
   line-height: 1.5em;
   width: 30%;
   background-color: white;
+  color: var(--text-color);
+  border-radius: 0.25rem;
   cursor: pointer;
   text-decoration: none;
   border: 1px solid rgb(16, 16, 16);
   transition: 0.3s;
 }
 #backFinalize:hover{
-  background-color: rgb(128, 12, 12);
+  background-color: rgba(194, 0, 0, 0.476);
   border: 1px solid aliceblue;
   color: aliceblue;
 }
 #proceedFinalize{
-  display: inline-block;
   height: 2.5em;
   font-size: 1.2em;
   line-height: 1.5em;
-  width: 70%;
+  width: calc(70% - 5px);
+  margin-left: 5px;
   background-color: var(--buttonBgColor);
   color: aliceblue;
+  border-radius: 0.25rem;
   cursor: pointer;
   transition: all 0.3s;
   border: 1px solid rgb(16, 16, 16);
@@ -1255,9 +1271,9 @@ li{
   display: flex;
 }
 .sizeOption{
-  height: 1.5em;
-  width: 2em;
-  font-size: 1.3em;
+  height: 2em;
+  width: 2.5em;
+  font-size: 1.5em;
   border: 2px solid var(--ringSettings);
   border-radius: 5px;
   margin-right: 10px;
@@ -1290,11 +1306,10 @@ li{
   color: var(--variation-text);
 }
 .subDesc{
-  font-size: 0.7em;
-  font-family: serif;
-  margin-top: 1em;
-  margin-left: 0.5em;
-  color: var(--subtitleColor);
+  font-size: 0.6em;
+    font-family: serif;
+    margin-top: 1em;
+    color: var(--subtitleColor);
 }
 
 #mconfiguratorContainer::-webkit-scrollbar{
